@@ -4,7 +4,7 @@ let comp: component = new component();
 document.body.appendChild(comp.CreatingSomeClass());
 
 function hello(name: string) {
-    return "hello" + name;
+    return "hello " + name;
 }
 
-console.log(hello("Jhon"));
+console.log(hello("Matt"));

@@ -1,5 +1,7 @@
 .hello {
   color: red;
+  outline: 5px solid black;
+  height: 200px;
   background: url('./icon.png');
 
 }
