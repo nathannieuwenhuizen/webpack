@@ -3,10 +3,12 @@ const basePath = path.join(__dirname, '../');
 const config = require('../package.json');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
-    entry: path.join(basePath, 'src/script.ts'),
+    entry: {main :[path.join(basePath, 'src/script.ts'),
+        path.join(basePath, 'sass/main.scss')] },
     devtool: 'inline-source-map',
     module: {
         rules: [
@@ -16,11 +18,8 @@ module.exports = {
                 exclude: /node_modules/
       },
             {
-                test: /\.css$/,
-                use: [
-               'style-loader',
-               'css-loader'
-             ]
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
         }
     ]
     },
@@ -38,13 +37,16 @@ module.exports = {
     watch: true,
 
     plugins: [
+        new ExtractTextPlugin({
+            filename: 'assets/style.css'
+        }),
     new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,
             files: [
                 './dev/*.html',
                 './src/*.ts',
-                './assets/*.css',
+                './sass/*.scss',
                 './scr/*.js'],
             server: {
                 baseDir: ['./dev']
@@ -54,8 +56,8 @@ module.exports = {
         }),
         new CopyWebpackPlugin([{
             from: path.join(basePath, 'assets'),
-            to: path.join(basePath, 'dev/assets'),
-        }]),
+            to: path.join(basePath, 'dev/assets')
+        }])
   ]
 
 };
