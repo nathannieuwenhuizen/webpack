@@ -44,7 +44,7 @@ module.exports = {
             host: 'localhost',
             port: 3000,
             files: [
-                './dev/*.html',
+                './template/*.html',
                 './src/*.ts',
                 './sass/*.scss',
                 './scr/*.js'],
@@ -57,6 +57,10 @@ module.exports = {
         new CopyWebpackPlugin([{
             from: path.join(basePath, 'assets'),
             to: path.join(basePath, 'dev/assets')
+        }]),
+        new CopyWebpackPlugin([{
+            from: path.join(basePath, 'template/index.html'),
+            to: path.join(basePath, 'dev/index.html')
         }])
   ]
 
