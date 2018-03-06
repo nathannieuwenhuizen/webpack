@@ -4,6 +4,7 @@ const config = require('../package.json');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SpritesmithPlugin = require('webpack-spritesmith');
 
 module.exports = {
 
@@ -40,7 +41,10 @@ module.exports = {
                         }
                     ]
                 })
-            }
+            },
+            {test: /\.png$/, loaders: [
+                'file-loader?name=i/[hash].[ext]'
+            ]}
     ]
     },
     resolve: {
@@ -81,7 +85,26 @@ module.exports = {
         new CopyWebpackPlugin([{
             from: path.join(basePath, 'template/index.html'),
             to: path.join(basePath, 'dev/index.html')
-        }])
+        }]),
+        new SpritesmithPlugin({
+            src: {
+                cwd: path.resolve(__dirname, '../atlas_assets'),
+                glob: '*.png'
+            },
+            target: {
+                image: path.resolve(__dirname, '../dev/assets/atlases/sprite.png'),
+                css: [
+                    //optional if we want a css file referencing the atlas
+                    //path.resolve(__dirname, '../dev/assets/atlases/sprite.css'),
+                    [path.resolve(__dirname, '../dev/assets/atlases/sprite.json'), {
+                        format: 'json_texture'
+                    }]
+                ]
+            },
+            apiOptions: {
+                cssImageRef: "~sprite.png"
+            }
+        })
   ]
 
 };
