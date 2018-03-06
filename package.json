@@ -26,7 +26,8 @@
     "ts-loader": "^3.5.0",
     "typescript": "^2.7.2",
     "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.11.2"
+    "webpack-dev-server": "^2.11.2",
+    "webpack-spritesmith": "^0.4.0"
   },
   "dependencies": {
     "lodash": "^4.17.5"
