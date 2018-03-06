@@ -1,5 +1,6 @@
 export default class component {
     constructor(){
+
     }
     
     public CreatingSomeClass(): any {

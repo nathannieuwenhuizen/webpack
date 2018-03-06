@@ -7,16 +7,28 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
-    entry: {main :[path.join(basePath, 'src/script.ts'),
+    entry: {main :[path.join(basePath, 'src/app.ts'),
         path.join(basePath, 'sass/main.scss')] },
     devtool: 'inline-source-map',
     module: {
         rules: [
+            // Setting the rules for specific modules
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
-      },
+            },{
+                test: /pixi\.js$/,
+                loader: 'expose-loader?PIXI',
+            },
+            {
+                test: /phaser-split\.js$/,
+                loader: 'expose-loader?Phaser',
+            },
+            {
+                test: /p2\.js$/,
+                loader: 'expose-loader?p2',
+            },
             {
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
@@ -46,6 +58,9 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
+            pixi: path.join(basePath, 'node_modules/phaser-ce/build/custom/pixi.js'),
+            phaser: path.join(basePath, 'node_modules/phaser-ce/custom/phaser-split.js'),
+            p2: path.join(basePath, 'node_modules/phaser-ce/build/custom/p2.js'),
             assets: path.join('assets/')
         }
     },
@@ -60,7 +75,7 @@ module.exports = {
         new ExtractTextPlugin({
             filename: 'assets/style.css'
         }),
-    new BrowserSyncPlugin({
+        new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,
             files: [

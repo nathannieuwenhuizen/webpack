@@ -1,3 +1,8 @@
+import 'phaser-ce';
+
+let game: Phaser.Game = new Phaser.Game();
+console.log(game);
+
 import component from './component';
 
 let comp: component = new component();
