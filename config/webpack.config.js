@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const basePath = path.join(__dirname, '../');
 const config = require('../package.json');
@@ -13,11 +15,12 @@ module.exports = {
     module: {
         rules: [
             // Setting the rules for specific modules
-            {
+            {    
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
-            },{
+            },
+            {
                 test: /pixi\.js$/,
                 loader: 'expose-loader?PIXI',
             },
@@ -82,21 +85,36 @@ module.exports = {
                 './template/*.html',
                 './src/*.ts',
                 './sass/*.scss',
-                './scr/*.js'],
+                './scr/*.js'
+            ],
             server: {
                 baseDir: ['./dev']
             }
         }, {
             reload: false
         }),
-        new CopyWebpackPlugin([{
-            from: path.join(basePath, 'assets'),
-            to: path.join(basePath, 'dev/assets')
-        }]),
-        new CopyWebpackPlugin([{
-            from: path.join(basePath, 'template/index.html'),
-            to: path.join(basePath, 'dev/index.html')
-        }])
+        new CopyWebpackPlugin([
+            {
+                from: path.join(basePath, 'node_modules/phaser-ce/build/custom/p2.js'),
+                to: path.join(basePath, 'dev/vendor/p2.js')
+            },
+            {
+                from: path.join(basePath, 'node_modules/phaser-ce/build/custom/pixi.js'),
+                to: path.join(basePath, 'dev/vendor/pixi.js')
+            },
+            {
+                from: path.join(basePath, 'node_modules/phaser-ce/build/custom/phaser-split.js'),
+                to: path.join(basePath, 'dev/vendor/phaser.js')
+            },
+            {
+                from: path.join(basePath, 'assets'),
+                to: path.join(basePath, 'dev/assets')
+            },
+            {
+                from: path.join(basePath, 'template/index.html'),
+                to: path.join(basePath, 'dev/index.html')
+            }
+        ])
   ]
 
 };

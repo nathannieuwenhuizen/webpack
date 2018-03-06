@@ -1,15 +1,34 @@
 import 'phaser-ce';
 
-let game: Phaser.Game = new Phaser.Game();
-console.log(game);
+import Gameplay from './States/Gameplay';
 
-import component from './component';
+namespace WebPackGame 
+{
+    export class Game extends Phaser.Game 
+    {
+        constructor() 
+        {
+            // Game settings
+            super(<Phaser.IGameConfig>{
+                enableDebug: false,
+                renderer: Phaser.AUTO,
+                parent: 'content',
+                // transparent: true,
+                antialias: true,
+                preserveDrawingBuffer: false
+            });
+            this.clearBeforeRender = false;
 
-let comp: component = new component();
-document.body.appendChild(comp.CreatingSomeClass());
+            // Add the states here
+            this.state.add(Gameplay.Name, Gameplay, false);
 
-function hello(name: string) {
-    return "hello " + name;
+            // Starting the first state
+            this.state.start(Gameplay.Name);
+
+        }
+    }
 }
 
-console.log(hello("Nathan"));
+// Creating a game instance 
+// It'll be in the global scope and will have no reference
+new WebPackGame.Game();
