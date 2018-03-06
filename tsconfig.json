@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "./dev/",
+        "outDir": "./builds/dev/",
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "amd",
@@ -13,6 +13,6 @@
     "files": [
         "./node_modules/phaser-ce/typescript/pixi.comments.d.ts",
         "./node_modules/phaser-ce/typescript/phaser.comments.d.ts",
-        "./src/app.ts"
+        "./ts/app.ts"
     ]
 }

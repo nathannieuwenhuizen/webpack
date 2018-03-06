@@ -10,7 +10,7 @@ const SpritesmithPlugin = require('webpack-spritesmith');
 
 module.exports = {
 
-    entry: {main :[path.join(basePath, 'src/app.ts'),
+    entry: {main :[path.join(basePath, 'ts/app.ts'),
         path.join(basePath, 'sass/main.scss')] },
     devtool: 'inline-source-map',
     module: {
@@ -73,7 +73,7 @@ module.exports = {
     },
     output: {
         filename: 'game.js',
-        path: path.join(basePath, 'dev/'),
+        path: path.join(basePath, 'builds/dev/'),
         publicPath: "../assets/"
     },
     watch: true,
@@ -87,12 +87,12 @@ module.exports = {
             port: 3000,
             files: [
                 './template/*.html',
-                './src/*.ts',
+                './ts/*.ts',
                 './sass/*.scss',
-                './scr/*.js'
+                './ts/*.js'
             ],
             server: {
-                baseDir: ['./dev']
+                baseDir: ['./builds/dev']
             }
         }, {
             reload: false
@@ -100,23 +100,23 @@ module.exports = {
         new CopyWebpackPlugin([
             {
                 from: path.join(basePath, 'node_modules/phaser-ce/build/custom/p2.js'),
-                to: path.join(basePath, 'dev/vendor/p2.js')
+                to: path.join(basePath, 'builds/dev/vendor/p2.js')
             },
             {
                 from: path.join(basePath, 'node_modules/phaser-ce/build/custom/pixi.js'),
-                to: path.join(basePath, 'dev/vendor/pixi.js')
+                to: path.join(basePath, 'builds/dev/vendor/pixi.js')
             },
             {
                 from: path.join(basePath, 'node_modules/phaser-ce/build/custom/phaser-split.js'),
-                to: path.join(basePath, 'dev/vendor/phaser.js')
+                to: path.join(basePath, 'builds/dev/vendor/phaser.js')
             },
             {
                 from: path.join(basePath, 'assets'),
-                to: path.join(basePath, 'dev/assets')
+                to: path.join(basePath, 'builds/dev/assets')
             },
             {
                 from: path.join(basePath, 'template/index.html'),
-                to: path.join(basePath, 'dev/index.html')
+                to: path.join(basePath, 'builds/dev/index.html')
             }
         ]),
         new SpritesmithPlugin({
@@ -125,11 +125,11 @@ module.exports = {
                 glob: '*.png'
             },
             target: {
-                image: path.resolve(__dirname, '../dev/assets/atlases/sprite.png'),
+                image: path.resolve(__dirname, '../builds/dev/assets/atlases/sprite.png'),
                 css: [
                     //optional if we want a css file referencing the atlas
-                    //path.resolve(__dirname, '../dev/assets/atlases/sprite.css'),
-                    [path.resolve(__dirname, '../dev/assets/atlases/sprite.json'), {
+                    //path.resolve(__dirname, '../builds/dev/assets/atlases/sprite.css'),
+                    [path.resolve(__dirname, '../builds/dev/assets/atlases/sprite.json'), {
                         format: 'json_texture'
                     }]
                 ]

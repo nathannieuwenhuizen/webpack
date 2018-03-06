@@ -19,7 +19,7 @@ export default class Gameplay extends Phaser.State {
         super.preload(this.game);
 
         // This will be replaced with a propper preloader
-        this.game.load.image(Images.IconTest, './assets/' + Images.IconTest);
+        this.game.load.image(Images.IconTest, './assets/sprites/' + Images.IconTest);
 
     }
 
