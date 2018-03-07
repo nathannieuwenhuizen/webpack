@@ -2,7 +2,8 @@ import 'phaser-ce';
 
 import Images from '../Data/Images';
 
-export default class Gameplay extends Phaser.State {
+export default class Gameplay extends Phaser.State 
+{
     public static Name: string = 'gameplay';
 
     public name: string = Gameplay.Name;

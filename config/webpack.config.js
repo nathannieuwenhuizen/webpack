@@ -41,8 +41,6 @@ module.exports = {
                         {
                             loader: 'css-loader',
                             options: {
-                                // If you are having trouble with urls not resolving add this setting.
-                                // See https://github.com/webpack-contrib/css-loader#url
                                 url: false,
                                 minimize: true,
                                 sourceMap: true

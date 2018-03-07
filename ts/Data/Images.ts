@@ -1,4 +1,5 @@
-export default class Images {
+export default class Images 
+{
 
     public static IconTest: string = 'icon.png';
 
