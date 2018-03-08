@@ -10,6 +10,8 @@ const SpritesmithPlugin = require('webpack-spritesmith');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const pathsToClean = ['dev'];
 const cleanOptions = { root: path.join(__dirname, '../builds'), verbose: true, dry: false, exclude: [],};
+const HappyPack = require('happypack');
+
 module.exports = { 
 
     entry: {main :[path.join(basePath, 'ts/app.ts'),
@@ -20,7 +22,7 @@ module.exports = {
             // Setting the rules for specific modules
             {    
                 test: /\.tsx?$/,
-                use: 'ts-loader',
+                use: 'happypack/loader?id=ts',
                 exclude: /node_modules/
             },
             {
@@ -96,6 +98,17 @@ module.exports = {
             }
         }, {
             reload: true
+        }),
+        new HappyPack({
+            id: 'ts',
+            verbose: false,
+            threads: 2,
+            loaders: [
+                {
+                    path: 'ts-loader',
+                    query: {happyPackMode: true},
+                },
+            ],
         }),
         new CleanWebpackPlugin(pathsToClean, cleanOptions),
         new CopyWebpackPlugin([
