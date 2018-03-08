@@ -7,8 +7,10 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SpritesmithPlugin = require('webpack-spritesmith');
-
-module.exports = {
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const pathsToClean = ['dev'];
+const cleanOptions = { root: path.join(__dirname, '../builds'), verbose: true, dry: false, exclude: [],};
+module.exports = { 
 
     entry: {main :[path.join(basePath, 'ts/app.ts'),
         path.join(basePath, 'sass/main.scss')] },
@@ -38,7 +40,7 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
-                        {
+                        { 
                             loader: 'css-loader',
                             options: {
                                 // If you are having trouble with urls not resolving add this setting.
@@ -95,8 +97,9 @@ module.exports = {
                 baseDir: ['./builds/dev']
             }
         }, {
-            reload: false
+            reload: true
         }),
+        new CleanWebpackPlugin(pathsToClean, cleanOptions),
         new CopyWebpackPlugin([
             {
                 from: path.join(basePath, 'node_modules/phaser-ce/build/custom/p2.js'),
@@ -136,7 +139,10 @@ module.exports = {
             },
             apiOptions: {
                 cssImageRef: "~sprite.png"
-            }
+            },
+            spritesmithOptions: {
+                padding: 5
+            },
         })
   ]
 
