@@ -1,5 +1,6 @@
 'use strict';
 
+const webpack = require('webpack');
 const path = require('path');
 const basePath = path.join(__dirname, '../');
 const config = require('../package.json');
@@ -11,6 +12,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const pathsToClean = ['dev'];
 const cleanOptions = { root: path.join(__dirname, '../builds'), verbose: true, dry: false, exclude: [],};
 const HappyPack = require('happypack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
 
 module.exports = { 
 
@@ -81,6 +84,15 @@ module.exports = {
     watch: true,
 
     plugins: [
+        new webpack.DefinePlugin({
+            'GAME_WIDTH': 720,
+            'GAME_HEIGHT': 1280,
+            'DEBUG': true,
+            'version': JSON.stringify('dev'),
+            'libs': JSON.stringify([
+                'node_modules/@orange-games/phaser-spine/build/phaser-spine.js'
+            ])
+        }),
         new ExtractTextPlugin({
             filename: 'assets/style.css'
         }),
@@ -125,6 +137,10 @@ module.exports = {
                 to: path.join(basePath, 'builds/dev/vendor/phaser.js')
             },
             {
+                from: path.join(basePath, 'node_modules/@orange-games/phaser-spine/build/phaser-spine.js'),
+                to: path.join(basePath, 'builds/dev/vendor/phaserspine.js')
+            },
+            {
                 from: path.join(basePath, 'assets'),
                 to: path.join(basePath, 'builds/dev/assets')
             },
@@ -133,6 +149,12 @@ module.exports = {
                 to: path.join(basePath, 'builds/dev/index.html')
             }
         ]),
+        new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),
+        new ForkTsCheckerWebpackPlugin({
+            checkSyntacticErrors: true,
+            tslint: path.join(__dirname, 'tslint.json'),
+            tsconfig: path.join(__dirname, 'tsconfig.json'),
+        }),
         new SpritesmithPlugin({
             src: {
                 cwd: path.resolve(__dirname, '../atlas_assets'),
