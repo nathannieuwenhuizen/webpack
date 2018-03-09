@@ -5,7 +5,8 @@ The purpose of this framework is to make the development procces of html5 Phaser
 It's setup as a fundement for an GameDevelopment exam project.
 
 ## Getting started
-After the project is cloned into a local repository you need to install the needed packages.
+After the project is cloned into a local repository you need to install the needed packages defined in the package.json.
+Those packages are the necessary software programs needed for the deevelopment enviroment.
 
 This is done by running:
 ```
