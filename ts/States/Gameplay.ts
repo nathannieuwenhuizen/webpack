@@ -15,132 +15,22 @@ export default class Gameplay extends Phaser.State
         super();
     }
 
-    public init(): void 
-    {
-        if (this.game.device.desktop) {
-            this.scale.pageAlignHorizontally = true;
-            this.scale.windowConstraints.bottom = 'visual';
-            
-            this.game.onBlur.add(() => {
-                this.game.sound.mute = true;
-            });
-            this.game.onFocus.add(() => {
-                this.game.sound.mute = false;
-            });
-            window.addEventListener('resize', () => {
-                this.scaleCanvasContain();
-            });
-            this.scaleCanvasContain();
-        } else {
-            console.log('mobile');
-            this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
-            this.scale.fullScreenScaleMode = Phaser.ScaleManager.USER_SCALE;
-
-            window.addEventListener('resize', () => {
-                Gameplay.mobileResizeCallback(this.game.scale);
-            });
-            Gameplay.mobileResizeCallback(this.game.scale);
-            this.game.scale.onSizeChange.add(
-                () => {
-                    // if (Constants.LANDSCAPE_LOCKED) {
-                    //     if (this.game.width > this.game.height) {
-                    //         this.handleCorrect();
-                    //     } else {
-                    //         this.handleIncorrect();
-                    //     }
-                    // } else if (Constants.PORTRAIT_LOCKED) {
-                    //     if (this.game.width < this.game.height) {
-                    //         this.handleCorrect();
-                    //     } else {
-                    //         this.handleIncorrect();
-                    //     }
-                    // }
-                    this.game.state.getCurrentState().resize(window.innerWidth, window.innerHeight);
-                },
-                this
-            );
-        }
-        //input pointers limited to 1
-        this.game.input.maxPointers = 1;
-
-        //Disable contextual menu
-        this.game.canvas.oncontextmenu = function (e: Event): void {
-            e.preventDefault();
-        };
-    }
-    private scaleCanvasContain(): void {
-        if (window.innerHeight / window.innerWidth > GAME_HEIGHT / GAME_WIDTH) {
-            this.scale.maxHeight = window.innerWidth * (GAME_HEIGHT / GAME_WIDTH);
-            this.scale.maxWidth = window.innerWidth;
-        } else {
-            this.scale.maxHeight = window.innerHeight;
-            this.scale.maxWidth = window.innerHeight / (GAME_HEIGHT / GAME_WIDTH);
-        }
-    }
-
-    public static mobileResizeCallback(manager: Phaser.ScaleManager): void {
-        let width: number = window.innerWidth;
-        let height: number = window.innerHeight;
-
-        let usedWidth: number = GAME_WIDTH;
-        let usedHeight: number = GAME_HEIGHT;
-
-        let scaleFactor: number = 1;
-
-        //So first we check if the game is beeing played in landscape
-        if (width > height) {
-            scaleFactor /= width / usedHeight;
-        } else {
-            scaleFactor /= height / usedWidth;
-        }
-
-        let CALCULATED_WIDTH: any = Math.ceil(width * scaleFactor);
-        let CALCULATED_HEIGHT: any = Math.ceil(height * scaleFactor);
-
-        manager.setGameSize(CALCULATED_WIDTH, CALCULATED_HEIGHT);
-        manager.setUserScale(1 / scaleFactor, 1 / scaleFactor);
-    }
-
     public resize(): void {
         console.log('resize');
-    }
-
-    public preload(): void
-    {
-        super.preload(this.game);
-
-        // This will be replaced with a propper preloader
-        this.game.load.image(Images.IconTest, './assets/sprites/' + Images.IconTest + '.png');
-
-        this.game.load.spine('chips', 'assets/spine/chips.json');
     }
 
     public create(): void
     {
         super.create(this.game);
 
-        this._testSprite = this.game.add.sprite(this.game.width / 2, this.game.height / 2, Images.IconTest);
-        this._testSprite.anchor.set(.5);
-
-        let chip: any = this.game.add.spine(
-            200,        //X positon
-            200,        //Y position
-            'chips'     //the key of the object in cache
-        ); 
-        chip.setAnimationByName(
-            0,          //Track index
-            "idle",     //Animation's name
-            true        //If the animation should loop or not
-        );
-        chip.setSkinByName('chip_blue');
+        let text = this.game.add.text(0, 0, 'this is the gameplay state', {font: '50px',
+        fill: '#fff',
+        align: 'center'});
     }
 
     public shutdown(): void 
     {
         super.shutdown(this.game);
-
-        this._testSprite.destroy(true);
-        this._testSprite = null;
     }
 
 }

@@ -1,5 +1,8 @@
 import 'phaser-ce';
 
+import Boot from './States/Boot';
+import Menu from './States/Menu';
+import Test from './States/Test';
 import Gameplay from './States/Gameplay';
 
 namespace WebPackGame 
@@ -39,10 +42,13 @@ namespace WebPackGame
             this.plugins.add(PhaserSpine.SpinePlugin);
 
             // Add the states here
-            this.state.add(Gameplay.Name, Gameplay, false);
+            this.state.add(Boot.Name, Boot, false);
+            this.state.add(Menu.Name, Menu, false);
+            this.state.add(Test.Name, Test, false);
+            this.state.add(Gameplay.Name, Gameplay, false); 
 
             // Starting the first state
-            this.state.start(Gameplay.Name);
+            this.state.start(Boot.Name);
             this.state.remove('game');
         }
     }
