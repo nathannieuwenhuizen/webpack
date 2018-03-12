@@ -1,78 +1,78 @@
 import 'phaser-ce';
+
 import GridObject from './GridObject';
 import Atlases from '../../Data/Atlases';
 
-export enum icons {
+export enum _icons {
     triangle = 'triangle',
     circle = 'circle',
     square = 'square'
 }
 
-export enum colors {
+export enum _colors {
     blue = 'blue',
     red = 'red',
     green = 'green'
 }
 
-export default class Tile extends GridObject 
+export default class Tile extends GridObject
 {
-    private color: colors;
-    private icon: icons;
-    private iconSprite: Phaser.Sprite;
-    constructor(game: Phaser.Game, xPos: number, yPos: number)
+    private _color: _colors;
+    private _icon: _icons;
+    private _iconSprite: Phaser.Sprite;
+    constructor(game: Phaser.Game, _xPos: number, _yPos: number)
     {
-        super(game, xPos, yPos, 'ui_ingame_icon_backdrop');
+        super(game, _xPos, _yPos, 'ui_ingame_icon_backdrop');
 
         this.assignVallues();
 
-        console.log(this.color, this.icon);
-        this.iconSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, 'ui_ingame_icon_' + this.icon);
-        this.iconSprite.anchor.set(.5);
-        switch (this.color) {
-            case colors.blue:
-            this.iconSprite.tint = 0x0000FF;
+        this._iconSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, 'ui_ingame_icon_' + this._icon);
+        this._iconSprite.anchor.set(.5);
+        switch (this._color) {
+            case _colors.blue:
+            this._iconSprite.tint = 0x0000FF;
             break;
-            case colors.red:
-            this.iconSprite.tint = 0x0000FF;
+            case _colors.red:
+            this._iconSprite.tint = 0x0000FF;
             break;
-            case colors.green:
-            this.iconSprite.tint = 0x008000;
+            case _colors.green:
+            this._iconSprite.tint = 0x008000;
             break;
             default:
             break;
         }
-        this.addChild(this.iconSprite);
+        this.addChild(this._iconSprite);
     }
 
     public assignVallues(): void {
         let random: number = Math.floor(Math.random() * 3);
         switch (random){
             case 0:
-            this.icon = icons.circle;
+            this._icon = _icons.circle;
             break;
             case 1:
-            this.icon = icons.triangle;
+            this._icon = _icons.triangle;
             break;
             case 2:
-            this.icon = icons.square;
+            this._icon = _icons.square;
             break;
             default:
-            this.icon = icons.square;
+            this._icon = _icons.square;
             break;
         }
         random = Math.floor(Math.random() * 3);
         switch (random){
             case 0:
-            this.color = colors.blue;
+            this._color = _colors.blue;
             break;
             case 1:
-            this.color = colors.red;
+            this._color = _colors.red;
             break;
             case 2:
-            this.color = colors.green;
+            this._color = _colors.green;
             break;
             default:
-            this.color = colors.blue;
+            this._color = _colors.blue;
             break;
         }
     }
