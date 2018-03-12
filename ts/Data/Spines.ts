@@ -1,4 +1,4 @@
-export default class Spines 
+export default class Spines
 {
 
     public static Chips: string = 'chips';
@@ -7,5 +7,5 @@ export default class Spines
         //Add spines to load
         Spines.Chips
     ];
- 
+
 }

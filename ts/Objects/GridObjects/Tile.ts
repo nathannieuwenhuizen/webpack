@@ -1,4 +1,5 @@
 import 'phaser-ce';
+
 import GridObject from './GridObject';
 import Atlases from '../../Data/Atlases';
 
@@ -14,27 +15,29 @@ export enum colors {
     green = 'green'
 }
 
-export default class Tile extends GridObject 
+export default class Tile extends GridObject
 {
-    private color: colors;
-    private icon: icons;
-    private iconSprite: Phaser.Sprite;
-    constructor(game: Phaser.Game, xPos: number, yPos: number, icon: icons, color: colors) 
+    private _color: colors;
+    private _icon: icons;
+    private _iconSprite: Phaser.Sprite;
+
+    constructor(game: Phaser.Game, xPos: number, yPos: number, icon: icons, color: colors)
     {
         super(game, xPos, yPos, 'ui_ingame_icon_grey');
 
-        this.color = color;
-        this.icon = icon;
+        this._color = color;
+        this._icon = icon;
 
-        this.iconSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, '');
-        this.iconSprite.anchor.set(.5);
-        this.addChild(this.iconSprite);
+        this._iconSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, '');
+        this._iconSprite.anchor.set(.5);
+
+        this.addChild(this._iconSprite);
     }
-    
+
     public PopOut(): void {
         //
     }
-    
+
     public AnimateInAway(): void {
         //
     }
