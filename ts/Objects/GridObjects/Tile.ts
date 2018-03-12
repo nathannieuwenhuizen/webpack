@@ -17,8 +17,8 @@ export enum _colors {
 
 export default class Tile extends GridObject
 {
-    private _color: _colors;
-    private _icon: _icons;
+    public _color: _colors;
+    public _icon: _icons;
     private _iconSprite: Phaser.Sprite;
     constructor(game: Phaser.Game, _xPos: number, _yPos: number)
     {
@@ -33,7 +33,7 @@ export default class Tile extends GridObject
             this._iconSprite.tint = 0x0000FF;
             break;
             case _colors.red:
-            this._iconSprite.tint = 0x0000FF;
+            this._iconSprite.tint = 0xFF0000;
             break;
             case _colors.green:
             this._iconSprite.tint = 0x008000;
