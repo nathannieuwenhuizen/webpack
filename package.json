@@ -1,7 +1,7 @@
 {
   "name": "best-set",
   "version": "1.0.0",
-  "description": "This is a webpack build configuration for Phaser in combinartion with sass and typescript.",
+  "description": "Make the best set and level your character while not running out of time",
   "contributors": [
     {
       "name": "Nathan Nieuwenhuizen",
