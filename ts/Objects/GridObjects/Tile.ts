@@ -1,6 +1,7 @@
 import 'phaser-ce';
 
 import GridObject from './GridObject';
+import {gridElementTypes} from './GridObject';
 import Atlases from '../../Data/Atlases';
 
 export enum icons {
@@ -23,7 +24,7 @@ export default class Tile extends GridObject
 
     constructor(game: Phaser.Game, xPos: number, yPos: number, icon: icons, color: colors)
     {
-        super(game, xPos, yPos, 'ui_ingame_icon_grey');
+        super(game, xPos, yPos, 'ui_ingame_icon_grey', gridElementTypes.tile);
 
         this._color = color;
         this._icon = icon;
