@@ -22,18 +22,10 @@
       200
     ],
     "member-access": true,
-    "no-any": false,
+    "no-any": true,
     "no-arg": true,
     "no-conditional-assignment": true,
     "no-consecutive-blank-lines": true,
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-variable": true,
@@ -52,16 +44,14 @@
     "no-var-requires": true,
     "object-literal-sort-keys": false,
     "one-line": [
-      true,
+      false,
       "check-open-brace",
       "check-catch",
-      "check-else",
       "check-finally",
       "check-whitespace"
     ],
     "quotemark": [
       true,
-      "single",
       "avoid-escape"
     ],
     "radix": true,
