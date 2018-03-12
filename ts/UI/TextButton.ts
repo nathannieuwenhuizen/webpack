@@ -18,6 +18,7 @@ export default class TextButton extends Phaser.Button
         this.createTexture(bgColor);
     }
 
+    /*hallo*/
     public createTexture(bgColor: number): void {
         //Create a texture with shadow and use it as the texture of the button.
         let graphics: Phaser.Graphics = this.game.make.graphics(0, 0);
