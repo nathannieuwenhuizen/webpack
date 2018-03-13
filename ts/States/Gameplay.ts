@@ -7,7 +7,7 @@ import PauseMenu from '../UI/PauseMenu';
 import Timer from '../BackEnd/Timer';
 import TimeBar from '../UI/TimeBar';
 
-export default class Gameplay extends Phaser.State 
+export default class Gameplay extends Phaser.State
 {
     public static Name: string = 'gameplay';
 
@@ -19,7 +19,6 @@ export default class Gameplay extends Phaser.State
     private pauseMenuButton: TextButton;
 
     private _pauseMenu: PauseMenu;
-
 
     constructor()
     {
@@ -42,16 +41,18 @@ export default class Gameplay extends Phaser.State
         super.create(this.game);
 
         this._timerClass = new Timer();
-        this._timeBar = new TimeBar(this.game,0,0);
+        this._timeBar = new TimeBar(this.game, 0, 0);
 
-        let text: Phaser.Text = this.game.add.text(0, 0, 'this is the gameplay state', {font: '50px',
-        fill: '#fff',
-        align: 'center'});
+        this.game.add.text(0, 0, 'this is the gameplay state', {
+            font: '50px',
+            fill: '#fff',
+            align: 'center'
+        });
 
         this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest );
-        this._pauseMenu.onContinue.add(this.disableMenu,this);
-        this.pauseMenuButton = new TextButton(this.game,100,100,"||",{font: '50px',
-        fill: '#fff',align: 'center'}, this.activateMenu,this );
+        this._pauseMenu.onContinue.add(this.disableMenu, this);
+        this.pauseMenuButton = new TextButton(this.game, 100, 100, '||', {font: '50px',
+        fill: '#fff', align: 'center'}, this.activateMenu, this );
         this.resize();
     }
 
@@ -60,7 +61,6 @@ export default class Gameplay extends Phaser.State
         super.shutdown(this.game);
     }
 
-<<<<<<< HEAD
     private activateMenu(): void
     {
         //pause the game
@@ -70,12 +70,9 @@ export default class Gameplay extends Phaser.State
 
     }
 
-    private disableMenu():void
+    private disableMenu(): void
     {
-        this.pause(false);  
+        this.pause(false);
     }
 
 }
-=======
-}
->>>>>>> 69c5879deb6016639cccaa23210c6d1f4e2e3abe
