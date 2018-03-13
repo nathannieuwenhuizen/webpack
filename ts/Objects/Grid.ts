@@ -1,5 +1,4 @@
-import GridElement from './GridObjects/GridObject';
-import {gridElementTypes} from './GridObjects/GridObject';
+import GridElement, {gridElementTypes} from './GridObjects/GridObject';
 
 export default class Grid extends Phaser.Group
 {
@@ -18,6 +17,7 @@ export default class Grid extends Phaser.Group
 
         this.blocksOnX = blocksOnX;
         this.blocksOnY = blocksOnY;
+
         this.gridBlockSize = gridBlockSize;
         this.gridElementSizeMultiplier = gridElementSizeMultiplier;
 
@@ -183,8 +183,12 @@ export default class Grid extends Phaser.Group
     /* Destroy the grid and all it's elements */
     public destroy(): void
     {
+        if (!this._elements) { return; }
+
         for (let i: number = this._elements.length; i--; )
         {
+            if (!this._elements[i]) { continue; }
+
             this.removeChild(this._elements[i]);
             this._elements[i].destroy(true);
             this._elements[i] = null;

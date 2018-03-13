@@ -4,7 +4,8 @@ import Images from '../Data/Images';
 import Spines from '../Data/Spines';
 
 import Grid from '../Objects/Grid';
-import Tile from '../Objects/GridObjects/Tile';
+import Tile, { TileShapes, TileIcons } from '../Objects/GridObjects/Tile';
+import LevelGenerator from '../Objects/LevelGenerator';
 
 import TextButton from '../UI/TextButton';
 import PauseMenu from '../UI/PauseMenu';
@@ -18,9 +19,11 @@ export default class Gameplay extends Phaser.State
     public name: string = Gameplay.Name;
 
     private _testSprite: Phaser.Sprite;
-    private _testGrid: Grid;
     private _timeBar: TimeBar;
     private _timerClass: Timer;
+
+    private _testGrid: Grid;
+    private _levelGenerator: LevelGenerator;
 
     private pauseMenuButton: TextButton;
 
@@ -63,17 +66,22 @@ export default class Gameplay extends Phaser.State
             align: 'center'
         });
 
+        /* Creating the grid */
         this._testGrid = new Grid(this.game, 6, 6, 90, .9);
-
         this.game.add.existing(this._testGrid);
 
-        for (let x: number = 7; x--; )
-        {
-            for (let y: number = 7; y--; )
-            {
-                this._testGrid.add(new Tile(this.game, x, y));
-            }
-        }
+        /* Creating the generator and creating a new grid */
+        this._levelGenerator = new LevelGenerator();
+        let generatedGrid: Tile[] = this._levelGenerator.generateGrid(this._testGrid, (gridX: number, gridY: number, shape: TileShapes, icon: TileIcons) => {
+
+            return new Tile(this.game, gridX, gridY, shape, icon);
+
+        });
+
+        /* Adding the generated grid to the grid */
+        generatedGrid.forEach((tile: Tile) => {
+            this._testGrid.add(tile);
+        });
 
         this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest );
         this._pauseMenu.onContinue.add(this.disableMenu, this);
@@ -86,6 +94,11 @@ export default class Gameplay extends Phaser.State
     public shutdown(): void
     {
         super.shutdown(this.game);
+
+        this._testGrid.destroy();
+        this._testGrid = null;
+
+        this._levelGenerator = null;
     }
 
     private activateMenu(): void
