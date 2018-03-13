@@ -40,6 +40,9 @@ export default class Menu extends Phaser.State
             this.state.start(Test.Name);
         }, this, 400, 200, 0x000000);
         this.resize();
+
+        // Go to gameplay by default
+        // this.state.start(Gameplay.Name);
     }
 
     public resize(): void
