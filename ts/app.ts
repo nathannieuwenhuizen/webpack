@@ -5,11 +5,11 @@ import Menu from './States/Menu';
 import Test from './States/Test';
 import Gameplay from './States/Gameplay';
 
-namespace WebPackGame 
+namespace WebPackGame
 {
-    export class Game extends Phaser.Game 
+    export class Game extends Phaser.Game
     {
-        constructor() 
+        constructor()
         {
             // Game settings
             super(<Phaser.IGameConfig>{
@@ -23,7 +23,6 @@ namespace WebPackGame
                 preserveDrawingBuffer: false
             });
             this.clearBeforeRender = false;
-            console.log(GAME_HEIGHT);
 
             this.state.add('game', {
                 create: this.stateCreator.bind(this),
@@ -45,7 +44,7 @@ namespace WebPackGame
             this.state.add(Boot.Name, Boot, false);
             this.state.add(Menu.Name, Menu, false);
             this.state.add(Test.Name, Test, false);
-            this.state.add(Gameplay.Name, Gameplay, false); 
+            this.state.add(Gameplay.Name, Gameplay, false);
 
             // Starting the first state
             this.state.start(Boot.Name);
@@ -54,6 +53,6 @@ namespace WebPackGame
     }
 }
 
-// Creating a game instance 
+// Creating a game instance
 // It'll be in the global scope and will have no reference
-new WebPackGame.Game();
+let game: Phaser.Game = new WebPackGame.Game();

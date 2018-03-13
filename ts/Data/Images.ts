@@ -1,4 +1,4 @@
-export default class Images 
+export default class Images
 {
 
     public static IconTest: string = 'icon';
@@ -9,5 +9,5 @@ export default class Images
         Images.IconTest,
         Images.PlaceholderBar
     ];
- 
+
 }

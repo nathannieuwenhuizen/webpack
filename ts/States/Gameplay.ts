@@ -14,7 +14,7 @@ export default class Gameplay extends Phaser.State
     private _timeBar: TimeBar;
     private _timerClass: Timer;
 
-    constructor() 
+    constructor()
     {
         super();
     }
@@ -35,7 +35,7 @@ export default class Gameplay extends Phaser.State
         align: 'center'});
     }
 
-    public shutdown(): void 
+    public shutdown(): void
     {
         super.shutdown(this.game);
     }
