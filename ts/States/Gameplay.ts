@@ -3,11 +3,8 @@ import 'phaser-ce';
 import Images from '../Data/Images';
 import Spines from '../Data/Spines';
 
-import Grid from '../Objects/Grid';
-import Tile, { TileShapes, TileIcons } from '../Objects/GridObjects/Tile';
-import LevelGenerator from '../Objects/LevelGenerator';
-import PathChecker from '../Backend/PathChecker';
-import Input from '../Objects/Input';
+import GameField from '../Objects/GameObjects/GameField';
+import Tile from '../Objects/GridObjects/Tile';
 
 import TextButton from '../UI/TextButton';
 import PauseMenu from '../UI/PauseMenu';
@@ -26,12 +23,6 @@ export default class Gameplay extends Phaser.State
 
     private _gameField: GameField;
 
-    private _testGrid: Grid;
-    private _levelGenerator: LevelGenerator;
-
-    private _input: Input;
-    private _pathChecker: PathChecker;
-
     private pauseMenuButton: TextButton;
 
     private _pauseMenu: PauseMenu;
@@ -42,16 +33,6 @@ export default class Gameplay extends Phaser.State
     }
 
     public resize(): void {
-        let vmin: number = Math.min(this.game.width, this.game.height);
-
-        let gridSizeMultiplier: number = vmin * .7;
-        this._testGrid.gridBlockSize = gridSizeMultiplier / this._testGrid.blocksOnX;
-
-        this._testGrid.position.set(
-            this.game.width / 2 - this._testGrid.width / 2,
-            this.game.height / 1.6 - this._testGrid.height / 2
-        );
-
         this._pauseMenu.resize();
     }
 
@@ -73,39 +54,8 @@ export default class Gameplay extends Phaser.State
             align: 'center'
         });
 
-        /* Creating the grid */
-        this._testGrid = new Grid(this.game, 6, 6, 90, .9);
-        this.game.add.existing(this._testGrid);
-
-        /* Creating the generator and creating a new grid */
-        this._levelGenerator = new LevelGenerator();
-        let generatedGrid: Tile[] = this._levelGenerator.generateGrid(this._testGrid, (gridX: number, gridY: number, shape: TileShapes, icon: TileIcons) => {
-
-            return new Tile(this.game, gridX, gridY, shape, icon);
-
-        });
-
-        /* Adding the generated grid to the grid */
-        generatedGrid.forEach((tile: Tile) => {
-            this._testGrid.add(tile);
-        });
-
-        this._pathChecker = new PathChecker();
-        this._input = new Input(this.game);
-
-        /* Reading input on the path and checkign if it's a possible combination */
-        let drawnPath: Tile[] = [];
-
-        this._input.onDragSnap.add((tile: Tile) => {
-            drawnPath.push(tile);
-
-            if (this._pathChecker.isPatternPossible(drawnPath)) { this.newPathCreated(drawnPath); }
-        });
-        this._input.onInputUp.add(() => {
-
-            drawnPath = [];
-
-        });
+        this._gameField = new GameField(this.game);
+        this.game.add.existing(this._gameField);
 
         this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest);
         this._pauseMenu.onContinue.add(this.disableMenu, this);
@@ -120,19 +70,13 @@ export default class Gameplay extends Phaser.State
         console.log('new path!: ', path);
     }
 
-    public update(): void
-    {
-        this._input.checkInputOnTiles(<Tile[]>this._testGrid.elements);
-    }
-
     public shutdown(): void
     {
         super.shutdown(this.game);
 
-        this._testGrid.destroy();
-        this._testGrid = null;
+        this._gameField.destroy();
+        this._gameField = null;
 
-        this._levelGenerator = null;
     }
 
     private activateMenu(): void
