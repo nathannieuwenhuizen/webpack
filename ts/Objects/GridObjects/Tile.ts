@@ -21,9 +21,9 @@ export default class Tile extends GridObject
     public _color: _colors;
     public _icon: _icons;
     private _iconSprite: Phaser.Sprite;
-    constructor(game: Phaser.Game, xPos: number, yPos: number)
+    constructor(game: Phaser.Game, xPos: number, gridY: number)
     {
-        super(game, xPos, yPos, 'ui_ingame_icon_grey', gridElementTypes.tile);
+        super(game, xPos, gridY, 'ui_ingame_icon_backdrop', gridElementTypes.tile);
 
         this.assignVallues();
 

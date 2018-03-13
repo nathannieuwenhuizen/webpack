@@ -46,6 +46,9 @@ export default class Menu extends Phaser.State
         this.smallButtonContainer = this.createSmallButtonContainers();
         this.add.existing(this.smallButtonContainer);
 
+        // Go to gameplay by default
+        // this.state.start(Gameplay.Name);
+
         this.resize();
     }
 

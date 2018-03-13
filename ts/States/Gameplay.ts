@@ -2,6 +2,10 @@ import 'phaser-ce';
 
 import Images from '../Data/Images';
 import Spines from '../Data/Spines';
+
+import Grid from '../Objects/Grid';
+import Tile from '../Objects/GridObjects/Tile';
+
 import TextButton from '../UI/TextButton';
 import PauseMenu from '../UI/PauseMenu';
 import Timer from '../BackEnd/Timer';
@@ -13,6 +17,8 @@ export default class Gameplay extends Phaser.State
 
     public name: string = Gameplay.Name;
 
+    private _testSprite: Phaser.Sprite;
+    private _testGrid: Grid;
     private _timeBar: TimeBar;
     private _timerClass: Timer;
 
@@ -26,13 +32,21 @@ export default class Gameplay extends Phaser.State
     }
 
     public resize(): void {
-        console.log('resize');
+        let vmin: number = Math.min(this.game.width, this.game.height);
+
+        let gridSizeMultiplier: number = vmin * .7;
+        this._testGrid.gridBlockSize = gridSizeMultiplier / this._testGrid.blocksOnX;
+
+        this._testGrid.position.set(
+            this.game.width / 2 - this._testGrid.width / 2,
+            this.game.height / 1.6 - this._testGrid.height / 2
+        );
+
         this._pauseMenu.resize();
     }
 
     public pause(paused: boolean): void
     {
-        console.log(paused);
         this.game.paused = paused;
     }
 
@@ -49,10 +63,23 @@ export default class Gameplay extends Phaser.State
             align: 'center'
         });
 
+        this._testGrid = new Grid(this.game, 6, 6, 90, .9);
+
+        this.game.add.existing(this._testGrid);
+
+        for (let x: number = 7; x--; )
+        {
+            for (let y: number = 7; y--; )
+            {
+                this._testGrid.add(new Tile(this.game, x, y));
+            }
+        }
+
         this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest );
         this._pauseMenu.onContinue.add(this.disableMenu, this);
         this.pauseMenuButton = new TextButton(this.game, 100, 100, '||', {font: '50px',
         fill: '#fff', align: 'center'}, this.activateMenu, this );
+
         this.resize();
     }
 
