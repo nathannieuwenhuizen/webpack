@@ -1,7 +1,7 @@
 import 'phaser-ce';
 import Atlases from '../Data/Atlases';
 
-export default class TextButton extends Phaser.Button
+export default class ImageButton extends Phaser.Button
 {
     private _image: Phaser.Sprite;
 
