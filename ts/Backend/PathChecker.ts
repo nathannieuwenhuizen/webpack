@@ -1,7 +1,7 @@
 import 'phaser-ce';
 import Tile, { TileIcons, TileShapes } from '../Objects/GridObjects/Tile';
 
-export default class LineChecker
+export default class PathChecker
 {
 
     /* Return if a patern is possible */

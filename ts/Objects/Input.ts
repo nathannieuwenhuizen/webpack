@@ -19,6 +19,7 @@ export default class Input
         this.game.input.onUp.add(() => this.inputUp());
     }
 
+    /* For when the input is up */
     private inputUp(): void
     {
         this._currentSnap = null;

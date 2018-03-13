@@ -6,6 +6,7 @@ import Spines from '../Data/Spines';
 import Grid from '../Objects/Grid';
 import Tile, { TileShapes, TileIcons } from '../Objects/GridObjects/Tile';
 import LevelGenerator from '../Objects/LevelGenerator';
+import PathChecker from '../Backend/PathChecker';
 import Input from '../Objects/Input';
 
 import TextButton from '../UI/TextButton';
@@ -23,10 +24,13 @@ export default class Gameplay extends Phaser.State
     private _timeBar: TimeBar;
     private _timerClass: Timer;
 
+    private _gameField: GameField;
+
     private _testGrid: Grid;
     private _levelGenerator: LevelGenerator;
 
     private _input: Input;
+    private _pathChecker: PathChecker;
 
     private pauseMenuButton: TextButton;
 
@@ -86,20 +90,34 @@ export default class Gameplay extends Phaser.State
             this._testGrid.add(tile);
         });
 
+        this._pathChecker = new PathChecker();
         this._input = new Input(this.game);
+
+        /* Reading input on the path and checkign if it's a possible combination */
+        let drawnPath: Tile[] = [];
+
         this._input.onDragSnap.add((tile: Tile) => {
-            console.log('snapping and dragging', tile.gridPos);
+            drawnPath.push(tile);
+
+            if (this._pathChecker.isPatternPossible(drawnPath)) { this.newPathCreated(drawnPath); }
         });
         this._input.onInputUp.add(() => {
-            console.log('cancle path');
+
+            drawnPath = [];
+
         });
 
-        this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest );
+        this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest);
         this._pauseMenu.onContinue.add(this.disableMenu, this);
         this.pauseMenuButton = new TextButton(this.game, 100, 100, '||', {font: '50px',
         fill: '#fff', align: 'center'}, this.activateMenu, this );
 
         this.resize();
+    }
+
+    public newPathCreated(path: Tile[]): void
+    {
+        console.log('new path!: ', path);
     }
 
     public update(): void
