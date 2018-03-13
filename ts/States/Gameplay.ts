@@ -6,6 +6,7 @@ import Spines from '../Data/Spines';
 import Grid from '../Objects/Grid';
 import Tile, { TileShapes, TileIcons } from '../Objects/GridObjects/Tile';
 import LevelGenerator from '../Objects/LevelGenerator';
+import Input from '../Objects/Input';
 
 import TextButton from '../UI/TextButton';
 import PauseMenu from '../UI/PauseMenu';
@@ -24,6 +25,8 @@ export default class Gameplay extends Phaser.State
 
     private _testGrid: Grid;
     private _levelGenerator: LevelGenerator;
+
+    private _input: Input;
 
     private pauseMenuButton: TextButton;
 
@@ -83,12 +86,25 @@ export default class Gameplay extends Phaser.State
             this._testGrid.add(tile);
         });
 
+        this._input = new Input(this.game);
+        this._input.onDragSnap.add((tile: Tile) => {
+            console.log('snapping and dragging', tile.gridPos);
+        });
+        this._input.onInputUp.add(() => {
+            console.log('cancle path');
+        });
+
         this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest );
         this._pauseMenu.onContinue.add(this.disableMenu, this);
         this.pauseMenuButton = new TextButton(this.game, 100, 100, '||', {font: '50px',
         fill: '#fff', align: 'center'}, this.activateMenu, this );
 
         this.resize();
+    }
+
+    public update(): void
+    {
+        this._input.checkInputOnTiles(<Tile[]>this._testGrid.elements);
     }
 
     public shutdown(): void

@@ -21,6 +21,8 @@ export default class Grid extends Phaser.Group
         this.gridBlockSize = gridBlockSize;
         this.gridElementSizeMultiplier = gridElementSizeMultiplier;
 
+        this.inputEnableChildren = true;
+
         this.resize();
     }
 
@@ -66,6 +68,11 @@ export default class Grid extends Phaser.Group
     {
         this._blocksOnY = value;
         this.resize();
+    }
+
+    public get elements(): GridElement[]
+    {
+        return this._elements;
     }
 
     /* Get one or multiple elements with the given properties */
