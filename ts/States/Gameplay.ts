@@ -6,6 +6,11 @@ import Spines from '../Data/Spines';
 import Grid from '../Objects/Grid';
 import Tile from '../Objects/GridObjects/Tile';
 
+import TextButton from '../UI/TextButton';
+import PauseMenu from '../UI/PauseMenu';
+import Timer from '../BackEnd/Timer';
+import TimeBar from '../UI/TimeBar';
+
 export default class Gameplay extends Phaser.State
 {
     public static Name: string = 'gameplay';
@@ -14,6 +19,12 @@ export default class Gameplay extends Phaser.State
 
     private _testSprite: Phaser.Sprite;
     private _testGrid: Grid;
+    private _timeBar: TimeBar;
+    private _timerClass: Timer;
+
+    private pauseMenuButton: TextButton;
+
+    private _pauseMenu: PauseMenu;
 
     constructor()
     {
@@ -31,13 +42,22 @@ export default class Gameplay extends Phaser.State
             this.game.height / 1.6 - this._testGrid.height / 2
         );
 
+        this._pauseMenu.resize();
+    }
+
+    public pause(paused: boolean): void
+    {
+        this.game.paused = paused;
     }
 
     public create(): void
     {
         super.create(this.game);
 
-        let text: Phaser.Text = this.game.add.text(0, 0, 'this is the gameplay state', {
+        this._timerClass = new Timer();
+        this._timeBar = new TimeBar(this.game, 0, 0);
+
+        this.game.add.text(0, 0, 'this is the gameplay state', {
             font: '50px',
             fill: '#fff',
             align: 'center'
@@ -55,12 +75,31 @@ export default class Gameplay extends Phaser.State
             }
         }
 
+        this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest );
+        this._pauseMenu.onContinue.add(this.disableMenu, this);
+        this.pauseMenuButton = new TextButton(this.game, 100, 100, '||', {font: '50px',
+        fill: '#fff', align: 'center'}, this.activateMenu, this );
+
         this.resize();
     }
 
     public shutdown(): void
     {
         super.shutdown(this.game);
+    }
+
+    private activateMenu(): void
+    {
+        //pause the game
+        //stop the timer from moving et cetera
+        this.pause(true);
+        this._pauseMenu.visible = true;
+
+    }
+
+    private disableMenu(): void
+    {
+        this.pause(false);
     }
 
 }

@@ -158,7 +158,7 @@ module.exports = {
         new SpritesmithPlugin({
             src: {
                 cwd: path.resolve(__dirname, '../atlas_assets'),
-                glob: '*.png'
+                glob: '**/*.png'
             },
             target: {
                 image: path.resolve(__dirname, '../builds/dev/assets/atlases/sprite.png'),

@@ -16,12 +16,11 @@ export default class LineChecker
             colors.push(tiles[i]._color);
         }
 
-        if ((!this.everyValueIsTheSame(icons) && !this.everyValueIsDifferent(icons)) ||
-            (!this.everyValueIsTheSame(colors) && !this.everyValueIsDifferent(colors))){
-            return false;
-        }
+        let isCorrect: boolean =
+                !((!this.everyValueIsTheSame(icons) && !this.everyValueIsDifferent(icons)) ||
+                (!this.everyValueIsTheSame(colors) && !this.everyValueIsDifferent(colors)));
 
-        return true;
+        return isCorrect;
     }
     private everyValueIsTheSame(arr: any): boolean {
         let _value: any = arr[0];
