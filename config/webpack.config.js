@@ -152,8 +152,8 @@ module.exports = {
         new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),
         new ForkTsCheckerWebpackPlugin({
             checkSyntacticErrors: true,
-            tslint: path.join(__dirname, 'tslint.json'),
-            tsconfig: path.join(__dirname, 'tsconfig.json'),
+            tslint: path.join(__dirname, '../tslint.json'),
+            tsconfig: path.join(__dirname, '../tsconfig.json'),
         }),
         new SpritesmithPlugin({
             src: {

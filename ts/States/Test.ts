@@ -1,21 +1,25 @@
 import 'phaser-ce';
 
 import Images from '../Data/Images';
-export default class Test extends Phaser.State 
+import IGame from '../PluginManagers/IGame';
+
+export default class Test extends Phaser.State
 {
     public static Name: string = 'test';
 
     public name: string = Test.Name;
+    public game: IGame;
 
     private _testSprite: Phaser.Sprite;
 
-    constructor() 
+    constructor()
     {
         super();
     }
 
-    public init(): void 
+    public init(): void
     {
+        //
     }
 
     public create(): void
@@ -29,16 +33,16 @@ export default class Test extends Phaser.State
             200,        //X positon
             200,        //Y position
             'chips'     //the key of the object in cache
-        ); 
+        );
         chip.setAnimationByName(
             0,          //Track index
-            "idle",     //Animation's name
+            'idle',     //Animation's name
             true        //If the animation should loop or not
         );
         chip.setSkinByName('chip_blue');
     }
 
-    public shutdown(): void 
+    public shutdown(): void
     {
         super.shutdown(this.game);
 
