@@ -20,9 +20,9 @@ export default class LineDrawer
     /* Draw a path */
     public drawPath(tiles: Tile[]): void
     {
-        if (tiles.length <= 1) { return; }
-
         this.clearPath();
+
+        if (tiles.length <= 1) { return; }
 
         this._drawGraphics.beginFill(0xff0ff0);
         this._drawGraphics.lineStyle(15, Math.floor(Math.random() * 16777215));
