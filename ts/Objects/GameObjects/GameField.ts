@@ -145,7 +145,6 @@ export default class GameField extends Phaser.Group
             this._gridInput.destroy();
         }
         this._gridInput = null;
-
         if (this._lineDrawer)
         {
             this._lineDrawer.destroy();

@@ -57,7 +57,8 @@ export default class Gameplay extends Phaser.State
         this._gameField = new GameField(this.game);
         this.game.add.existing(this._gameField);
 
-        this._pauseMenu = new PauseMenu(this.game, 100, 100, 100, Images.CaviaTest , Images.CaviaTest);
+        this._pauseMenu = new PauseMenu(this.game, 0.6, 120, 125, Images.PopUpMenuBackground);
+
         this._pauseMenu.onContinue.add(this.disableMenu, this);
         this.pauseMenuButton = new TextButton(this.game, 100, 100, '||', {font: '50px',
         fill: '#fff', align: 'center'}, this.activateMenu, this );
@@ -85,12 +86,14 @@ export default class Gameplay extends Phaser.State
         //stop the timer from moving et cetera
         this.pause(true);
         this._pauseMenu.visible = true;
+        this.pauseMenuButton.visible = false;
 
     }
 
     private disableMenu(): void
     {
         this.pause(false);
+        this.pauseMenuButton.visible = true;
     }
 
 }
