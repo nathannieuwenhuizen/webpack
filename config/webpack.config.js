@@ -152,13 +152,13 @@ module.exports = {
         new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),
         new ForkTsCheckerWebpackPlugin({
             checkSyntacticErrors: true,
-            tslint: path.join(__dirname, 'tslint.json'),
-            tsconfig: path.join(__dirname, 'tsconfig.json'),
+            tslint: path.join(__dirname, '../tslint.json'),
+            tsconfig: path.join(__dirname, '../tsconfig.json'),
         }),
         new SpritesmithPlugin({
             src: {
                 cwd: path.resolve(__dirname, '../atlas_assets'),
-                glob: '*.png'
+                glob: '**/*.png'
             },
             target: {
                 image: path.resolve(__dirname, '../builds/dev/assets/atlases/sprite.png'),
