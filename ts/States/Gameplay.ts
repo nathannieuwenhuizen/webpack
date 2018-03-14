@@ -109,7 +109,7 @@ export default class Gameplay extends Phaser.State
         this.pauseMenuButton.visible = false;
 
     }
-    preload activateSocial(): void 
+    private activateSocial(): void
     {
         console.log('socialiceren? NANI!');
     }

@@ -60,8 +60,13 @@ export default class Tile extends GridObject
         return this._icon;
     }
 
-    public popOut(): void {
-        //
+    public animateOut(): Phaser.Signal {
+
+        let animateOutTween: Phaser.Tween = this.game.add.tween(this.scale)
+            .to({x: 0, y: 0}, 450, Phaser.Easing.Bounce.Out)
+            .start();
+
+        return animateOutTween.onComplete;
     }
 
     public animateInAway(): void {
