@@ -6,6 +6,7 @@ import LineDrawer from '../LineDrawer';
 import Input from '../Input';
 
 import Tile, {TileShapes, TileIcons} from '../GridObjects/Tile';
+import { gridElementTypes } from '../GridObjects/GridObject';
 
 export default class GameField extends Phaser.Group
 {
@@ -100,9 +101,10 @@ export default class GameField extends Phaser.Group
     {
         if (this._currentPath.length >= 3)
         {
+            /* Animating out the tiles in the grid */
             for (let i: number = this._currentPath.length; i--; )
             {
-                this._currentPath[i].animateOut();
+                this._currentPath[i].animateOut().addOnce( () => { this.grid.destroyElement(this._currentPath[i]); });
             }
         }
         this.canclePath();
@@ -123,7 +125,7 @@ export default class GameField extends Phaser.Group
 
     public update(): void
     {
-        this._gridInput.checkInputOnTiles(<Tile[]>this.grid.elements);
+        this._gridInput.checkInputOnTiles(<Tile[]>this.grid.get(null, null, null, gridElementTypes.tile));
     }
 
     public resize(): void
