@@ -6,16 +6,16 @@ import Atlases from '../../Data/Atlases';
 
 export enum TileIcons
 {
-    triangle = 'triangle',
-    circle = 'circle',
-    square = 'square'
+    triangle = 'helmet',
+    circle = 'magic',
+    square = 'shield'
 }
 
 export enum TileShapes
 {
-    blue = 0x0000ff,
-    red = 0xff0000,
-    green = 0x008000
+    blue = 'blue',
+    red = 'red',
+    green = 'purple'
 }
 
 export default class Tile extends GridObject
@@ -24,6 +24,7 @@ export default class Tile extends GridObject
     private _icon: TileIcons;
 
     private _iconSprite: Phaser.Sprite;
+    private _glowSprite: Phaser.Sprite;
 
     private _tween: Phaser.Tween;
 
@@ -34,16 +35,21 @@ export default class Tile extends GridObject
         this._iconSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, '');
         this._iconSprite.anchor.set(.5);
 
+        this._glowSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, '');
+        this._glowSprite.anchor.set(.5);
+
         this.shape = shape;
         this.icon = icon;
 
         this.addChild(this._iconSprite);
+        this.addChild(this._glowSprite);
     }
 
     /* Set the shape of a tile */
     set shape(value: TileShapes)
     {
-        this._iconSprite.tint = value;
+        this.frameName = 'ui_ingame_icon_' + value;
+        this._glowSprite.frameName = 'ui_ingame_icon_glow_' + value;
         this._shape = value;
     }
     get shape(): TileShapes

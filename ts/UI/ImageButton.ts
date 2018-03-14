@@ -8,7 +8,7 @@ export default class ImageButton extends Phaser.Button
     constructor(
         game: Phaser.Game, x: number, y: number, key: string, callback: Function, callbackContext: any)
         {
-        super(game, x, y, Atlases.Interface, callback, callbackContext, 'ui_menu_button_small', 'ui_menu_button_small', 'ui_menu_button_small');
+        super(game, x, y, Atlases.Interface, callback, callbackContext, 'ui_ingame_button', 'ui_ingame_button', 'ui_ingame_button');
 
         this.anchor.set(.5);
 
@@ -17,5 +17,14 @@ export default class ImageButton extends Phaser.Button
 
         this.addChild(this._image);
 
+        this.onInputDown.add(() => {
+            this.scale.set(0.9);
+        });
+        this.onInputOut.add(() => {
+            this.scale.set(1);
+        });
+        this.onInputUp.add(() => {
+            this.scale.set(1);
+        });
     }
 }

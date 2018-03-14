@@ -8,6 +8,7 @@ import Input from '../Input';
 import GridRegenerator from '../GridRegenerator';
 
 import Tile, {TileShapes, TileIcons} from '../GridObjects/Tile';
+import Atlases from '../../Data/Atlases';
 import { gridElementTypes } from '../GridObjects/GridObject';
 
 export default class GameField extends Phaser.Group
@@ -23,9 +24,20 @@ export default class GameField extends Phaser.Group
     /* The path that is being drawn */
     private _currentPath: Tile[];
 
+    private _backdropSprite: Phaser.Sprite;
+    private _timerBbackdropSprite: Phaser.Sprite;
     constructor(game: Phaser.Game)
     {
         super(game);
+
+        this._backdropSprite = new Phaser.Sprite(this.game, 0, 0, Atlases.Interface, 'ui_ingame_playfield_backdrop');
+        this.addChild(this._backdropSprite);
+        this._backdropSprite.anchor.set(.5);
+
+        this._timerBbackdropSprite = new Phaser.Sprite(this.game, 0, -this._backdropSprite.height / 2, Atlases.Interface, 'ui_ingame_timer_backdrop');
+        this._timerBbackdropSprite.anchor.set(.5, 0);
+
+        this._backdropSprite.addChild(this._timerBbackdropSprite);
 
         this.grid = new Grid(this.game, 6, 6, 90, .9);
         this.addChild(this.grid);
@@ -159,13 +171,17 @@ export default class GameField extends Phaser.Group
     {
         let vmin: number = Math.min(this.game.width, this.game.height);
 
-        let gridSizeMultiplier: number = vmin * .7;
+        let gridSizeMultiplier: number = vmin * 0.88;
         this.grid.gridBlockSize = gridSizeMultiplier / this.grid.blocksOnX;
 
         this.grid.position.set(
             this.game.width / 2 - this.grid.width / 2,
-            this.game.height / 1.6 - this.grid.height / 2
+            0
         );
+
+        this._backdropSprite.position.set(this.game.width / 2, this.grid.y + this.grid.height / 2 - 10);
+        this._backdropSprite.scale.set(vmin / 720);
+        this.y = this.game.height - this.height;
     }
 
     public destroy(): void
