@@ -3,6 +3,7 @@ import 'phaser-ce';
 import GamePlay from './Gameplay';
 import Test from './Test';
 import TextButton from '../UI/TextButton';
+import ImageButton from '../UI/ImageButton';
 import Gameplay from './Gameplay';
 import Atlases from '../Data/Atlases';
 export default class Menu extends Phaser.State
@@ -15,6 +16,7 @@ export default class Menu extends Phaser.State
     private title: Phaser.Sprite;
     private buttonContainers: Phaser.Group;
     private smallButtonContainer: Phaser.Group;
+
     constructor()
     {
         super();
@@ -43,6 +45,9 @@ export default class Menu extends Phaser.State
 
         this.smallButtonContainer = this.createSmallButtonContainers();
         this.add.existing(this.smallButtonContainer);
+
+        // Go to gameplay by default
+        // this.state.start(Gameplay.Name);
 
         this.resize();
     }
@@ -81,19 +86,15 @@ export default class Menu extends Phaser.State
     private createSmallButtonContainers(): Phaser.Group {
         let group: Phaser.Group = new Phaser.Group(this.game);
 
-        let playButton: TextButton = new TextButton(this.game, 0, -200, 'Play', {font: '50px',
-        fill: '#fff',
-        align: 'center' }, () => {
-            this.state.start(Gameplay.Name);
-        }, this);
-        group.add(playButton);
-
-        let howToPlayButton: TextButton = new TextButton(this.game, 0, 0, 'How to play', {font: '50px',
-        fill: '#fff',
-        align: 'center' }, () => {
+        let settingButton: ImageButton = new ImageButton(this.game, 100, 0, 'ui_menu_button_small', () => {
             //
         }, this);
-        group.add(howToPlayButton);
+        group.add(settingButton);
+
+        let shareButton: ImageButton = new ImageButton(this.game, -100, 0, 'ui_menu_button_small', () => {
+            //
+        }, this);
+        group.add(shareButton);
 
         return group;
     }
@@ -111,6 +112,9 @@ export default class Menu extends Phaser.State
 
         this.buttonContainers.scale.set(vmin / GAME_WIDTH);
         this.buttonContainers.position.set(this.game.width / 2, this.game.height * .55);
+
+        this.smallButtonContainer.scale.set(vmin / GAME_WIDTH);
+        this.smallButtonContainer.position.set(this.game.width / 2, this.game.height * .9);
     }
 
     public shutdown(): void

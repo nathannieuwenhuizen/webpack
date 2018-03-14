@@ -4,78 +4,60 @@ import GridObject from './GridObject';
 import {gridElementTypes} from './GridObject';
 import Atlases from '../../Data/Atlases';
 
-export enum _icons {
+export enum TileIcons
+{
     triangle = 'triangle',
     circle = 'circle',
     square = 'square'
 }
 
-export enum _colors {
-    blue = 'blue',
-    red = 'red',
-    green = 'green'
+export enum TileShapes
+{
+    blue = 0x0000ff,
+    red = 0xff0000,
+    green = 0x008000
 }
 
 export default class Tile extends GridObject
 {
-    public _color: _colors;
-    public _icon: _icons;
+    private _shape: TileShapes;
+    private _icon: TileIcons;
+
     private _iconSprite: Phaser.Sprite;
-    constructor(game: Phaser.Game, xPos: number, yPos: number)
+
+    constructor(game: Phaser.Game, gridX: number, gridY: number, shape: TileShapes, icon: TileIcons)
     {
-        super(game, xPos, yPos, 'ui_ingame_icon_grey', gridElementTypes.tile);
+        super(game, gridX, gridY, 'ui_ingame_icon_backdrop', gridElementTypes.tile);
 
-        this.assignVallues();
-
-        this._iconSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, 'ui_ingame_icon_' + this._icon);
+        this._iconSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, '');
         this._iconSprite.anchor.set(.5);
-        switch (this._color) {
-            case _colors.blue:
-            this._iconSprite.tint = 0x0000FF;
-            break;
-            case _colors.red:
-            this._iconSprite.tint = 0xFF0000;
-            break;
-            case _colors.green:
-            this._iconSprite.tint = 0x008000;
-            break;
-            default:
-            break;
-        }
+
+        this.shape = shape;
+        this.icon = icon;
+
         this.addChild(this._iconSprite);
     }
 
-    public assignVallues(): void {
-        let random: number = Math.floor(Math.random() * 3);
-        switch (random){
-            case 0:
-            this._icon = _icons.circle;
-            break;
-            case 1:
-            this._icon = _icons.triangle;
-            break;
-            case 2:
-            this._icon = _icons.square;
-            break;
-            default:
-            this._icon = _icons.square;
-            break;
-        }
-        random = Math.floor(Math.random() * 3);
-        switch (random){
-            case 0:
-            this._color = _colors.blue;
-            break;
-            case 1:
-            this._color = _colors.red;
-            break;
-            case 2:
-            this._color = _colors.green;
-            break;
-            default:
-            this._color = _colors.blue;
-            break;
-        }
+    /* Set the shape of a tile */
+    set shape(value: TileShapes)
+    {
+        this._iconSprite.tint = value;
+        this._shape = value;
+    }
+    get shape(): TileShapes
+    {
+        return this._shape;
+    }
+
+    /* Set the icon of a tile */
+    set icon(value: TileIcons)
+    {
+        this._iconSprite.frameName = 'ui_ingame_icon_' + value;
+        this._icon = value;
+    }
+    get icon(): TileIcons
+    {
+        return this._icon;
     }
 
     public popOut(): void {
@@ -84,5 +66,12 @@ export default class Tile extends GridObject
 
     public animateInAway(): void {
         //
+    }
+
+    public destroy(): void {
+        super.destroy(true);
+
+        this._iconSprite.destroy(true);
+        this._iconSprite = null;
     }
 }
