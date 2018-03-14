@@ -25,6 +25,8 @@ export default class Tile extends GridObject
 
     private _iconSprite: Phaser.Sprite;
 
+    private _tween: Phaser.Tween;
+
     constructor(game: Phaser.Game, gridX: number, gridY: number, shape: TileShapes, icon: TileIcons)
     {
         super(game, gridX, gridY, 'ui_ingame_icon_backdrop', gridElementTypes.tile);
@@ -62,15 +64,36 @@ export default class Tile extends GridObject
 
     public animateOut(): Phaser.Signal {
 
-        let animateOutTween: Phaser.Tween = this.game.add.tween(this.scale)
-            .to({x: 0, y: 0}, 450, Phaser.Easing.Bounce.Out)
+        this.clearTween();
+
+        this._tween = this.game.add.tween(this.scale)
+            .to({x: 0, y: 0}, 300, Phaser.Easing.Cubic.InOut)
             .start();
 
-        return animateOutTween.onComplete;
+        return this._tween.onComplete;
     }
 
-    public animateInAway(): void {
-        //
+    public animateDown(tiles: number, newYPos: number): Phaser.Signal
+    {
+
+        this.clearTween();
+
+        this._tween = this.game.add.tween(this)
+            .to({y: newYPos}, 650, Phaser.Easing.Bounce.Out)
+            .start();
+
+        this.gridPos.y += tiles;
+
+        return this._tween.onComplete;
+    }
+
+    private clearTween(): void
+    {
+        if (this._tween)
+        {
+            this._tween.stop(false);
+            this._tween = null;
+        }
     }
 
     public destroy(): void {

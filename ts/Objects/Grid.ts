@@ -76,18 +76,18 @@ export default class Grid extends Phaser.Group
     }
 
     /* Get one or multiple elements with the given properties */
-    public get(element?: GridElement, gridX?: number, gridY?: number, type?: gridElementTypes, args?: {property: string, value: any}[]): GridElement[] | GridElement
+    public get(element: GridElement = null, gridX: number = null, gridY: number = null, type: gridElementTypes = null, args: {property: string, value: any}[] = null): GridElement[] | GridElement
     {
 
         let foundItems: GridElement[] = [];
 
         this.forEach((currentElement: GridElement) => {
 
-            if (element && element !== currentElement) { return false; }
-            if (gridX && currentElement.gridPos.x !== gridX) { return false; }
-            if (gridY && currentElement.gridPos.y !== gridY) { return false; }
-            if (type && currentElement.gridElementType !== type) { return false; }
-            if (args)
+            if (element !== null && element !== currentElement) { return false; }
+            if (gridX !== null && currentElement.gridPos.x !== gridX) { return false; }
+            if (gridY !== null && currentElement.gridPos.y !== gridY) { return false; }
+            if (type !== null && currentElement.gridElementType !== type) { return false; }
+            if (args !== null)
             {
                 for (let i: number = args.length; i--; )
                 {
@@ -138,13 +138,21 @@ export default class Grid extends Phaser.Group
 
             if (!element) { continue; }
 
-            let shouldDestroy: boolean = callback(element, element.gridPos.x, element.gridPos.y);
+            let shouldDestroy: boolean = callback(element, element.gridPos.x, element.gridPos.y, i);
             if (shouldDestroy === true) {
                 this.destroyElement(element);
             }
 
         }
 
+    }
+
+    public gridPositionToWorldPosition(element: GridElement, gridX: number, gridY: number): {x: number, y: number}
+    {
+        return {
+            x: gridX * this.gridBlockSize + element.width * element.anchor.x,
+            y: gridY * this.gridBlockSize + element.height * element.anchor.y
+        };
     }
 
     /* Resize the whole grid and all it's elements */

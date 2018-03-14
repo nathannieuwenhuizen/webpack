@@ -5,6 +5,8 @@ import PathChecker from '../../Backend/PathChecker';
 import LineDrawer from '../LineDrawer';
 import Input from '../Input';
 
+import GridRegenerator from '../GridRegenerator';
+
 import Tile, {TileShapes, TileIcons} from '../GridObjects/Tile';
 import { gridElementTypes } from '../GridObjects/GridObject';
 
@@ -16,6 +18,7 @@ export default class GameField extends Phaser.Group
     private _pathChecker: PathChecker;
     private _gridInput: Input;
     private _lineDrawer: LineDrawer;
+    private _gridRegenerator: GridRegenerator;
 
     /* The path that is being drawn */
     private _currentPath: Tile[];
@@ -30,6 +33,8 @@ export default class GameField extends Phaser.Group
         this._gridSpawner = new LevelGenerator();
         this._pathChecker = new PathChecker();
         this._lineDrawer = new LineDrawer(game);
+
+        this._gridRegenerator = new GridRegenerator();
 
         this._gridInput = new Input(this.game);
 
@@ -54,14 +59,15 @@ export default class GameField extends Phaser.Group
             this.grid.add(tile);
         });
 
-        this._gridInput.onDragSnap.add(this.addNewTile, this);
+        /* Asigning the input signals */
+        this._gridInput.onDragSnap.add(this.addNewTileToPath, this);
         this._gridInput.onInputUp.add(this.inputRelease, this);
 
         this.resize();
     }
 
     /* What happens if the input finds, the mouse is draggig over a new tile */
-    private addNewTile(tile: Tile): void
+    private addNewTileToPath(tile: Tile): void
     {
         /* Checking if the tile is already in the path */
         for (let i: number = this._currentPath.length; i--; )
@@ -99,19 +105,40 @@ export default class GameField extends Phaser.Group
     /* What happens when the path input is released */
     private inputRelease(): void
     {
-        if (this._currentPath.length >= 3)
+
+        this._lineDrawer.clearPath();
+
+        if (this._currentPath.length < 3)
         {
-            /* Animating out the tiles in the grid */
-            for (let i: number = this._currentPath.length; i--; )
-            {
-                this._currentPath[i].animateOut().addOnce( () => { this.grid.destroyElement(this._currentPath[i]); });
-            }
+            this.cancelPath();
+            return;
         }
-        this.canclePath();
+
+        /* Animating out the tiles in the grid */
+        this._currentPath[0].animateOut().addOnce(this.regenerateGrid, this);
+
+        for (let i: number = this._currentPath.length - 1; i > 0; i-- )
+        {
+            this._currentPath[i].animateOut();
+        }
+
+    }
+
+    /* Replanish the grid with new tiles */
+    private regenerateGrid(): void
+    {
+        for (let i: number = this._currentPath.length; i--; )
+        {
+            this.grid.destroyElement(this._currentPath[i]);
+        }
+
+        this._gridRegenerator.moveNeededBlocksDown(this.grid);
+
+        this.cancelPath();
     }
 
     /* What happens when the path creaton get's canceled */
-    private canclePath(): void
+    private cancelPath(): void
     {
         this._currentPath = [];
         this._lineDrawer.clearPath();
