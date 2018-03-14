@@ -4,6 +4,24 @@ import Tile, { TileIcons, TileShapes } from '../Objects/GridObjects/Tile';
 export default class PathChecker
 {
 
+    /* Returns if a tile is a neighbour of the current tile */
+    public isNeighbour(currentTile: Tile, possibleTile: Tile): boolean
+    {
+
+        let minX: number = possibleTile.gridPos.x - 1;
+        let minY: number = possibleTile.gridPos.y - 1;
+        let maxX: number = possibleTile.gridPos.x + 1;
+        let maxY: number = possibleTile.gridPos.x + 1;
+
+        if  (((currentTile.gridPos.x >= minX && currentTile.gridPos.x <= maxX) &&
+            (currentTile.gridPos.y >= minY && currentTile.gridPos.y <= maxY))
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     /* Return if a patern is possible */
     public isPatternPossible(tiles: Tile[]): boolean
     {

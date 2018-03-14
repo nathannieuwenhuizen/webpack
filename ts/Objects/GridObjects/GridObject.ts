@@ -20,4 +20,5 @@ export default class GridObject extends Phaser.Sprite
 
         this.gridPos = {x: gridX, y: gridY};
     }
+
 }
