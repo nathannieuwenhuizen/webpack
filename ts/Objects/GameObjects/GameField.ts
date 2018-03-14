@@ -60,11 +60,7 @@ export default class GameField extends Phaser.Group
     private setupGrid(): void
     {
         /* Generating the grid */
-        let generatedLevel: Tile[] = this._gridSpawner.generateGrid(this.grid, (gridX: number, gridY: number, shape: TileShapes, icon: TileIcons) => {
-
-            return new Tile(this.game, gridX, gridY, shape, icon);
-
-        });
+        let generatedLevel: Tile[] = this.generateNewGrid();
 
         /* Adding the generated grid to the actual grid */
         generatedLevel.forEach((tile: Tile) => {
@@ -76,6 +72,15 @@ export default class GameField extends Phaser.Group
         this._gridInput.onInputUp.add(this.inputRelease, this);
 
         this.resize();
+    }
+
+    private generateNewGrid(): Tile[]
+    {
+        return this._gridSpawner.generateGrid(this.grid, (gridX: number, gridY: number, shape: TileShapes, icon: TileIcons) => {
+
+            return new Tile(this.game, gridX, gridY, shape, icon);
+
+        });
     }
 
     /* What happens if the input finds, the mouse is draggig over a new tile */
@@ -145,6 +150,10 @@ export default class GameField extends Phaser.Group
         }
 
         this._gridRegenerator.moveNeededBlocksDown(this.grid);
+
+        setTimeout( () => {
+            this._gridRegenerator.moveInNewElements(this.grid, this.generateNewGrid());
+        }, 850);
 
         this.cancelPath();
     }

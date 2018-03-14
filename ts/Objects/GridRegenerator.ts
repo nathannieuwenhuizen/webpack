@@ -49,6 +49,7 @@ export default class GridRegenerator
                     currentTile.gridPos.y + 1
                 ).y
             );
+            (<Tile>currentTile).gridPos.y = currentTile.gridPos.y + 1;
 
         }
 
@@ -57,6 +58,71 @@ export default class GridRegenerator
         if (ranCicles > grid.blocksOnY) { console.error('Grid blocks moving down buffer overflow: ', ranCicles); return; }
 
         if (floatingTiles.length > 0) { this.moveNeededBlocksDown(grid, ranCicles); }
+
+    }
+
+    private findNewTiles(grid: Grid, newGrid: Tile[]): Tile[]
+    {
+        let newTiles: Tile[] = [];
+
+        /* Finding the new tiles */
+        for (let i: number = newGrid.length; i--; )
+        {
+            let currentNewTile: Tile = newGrid[i];
+            let alreadyExists: boolean = false;
+
+            grid.forEach((element: GridObject) => {
+
+                if (
+                    element.gridPos.x === currentNewTile.gridPos.x &&
+                    element.gridPos.y === currentNewTile.gridPos.y
+                ) {
+                    alreadyExists = true;
+                }
+
+                return false;
+            });
+
+            if (alreadyExists === false) { newTiles.push(currentNewTile); }
+        }
+
+        return newTiles;
+
+    }
+
+    private animateInNewTiles(grid: Grid, newTiles: Tile[]): void
+    {
+        /* Animating in the new tiles */
+        for (let i: number = newTiles.length; i--; )
+        {
+            let currentNewTile: Tile = newTiles[i];
+
+            grid.add(currentNewTile);
+
+            /* Making the animate bounce in from the top */
+            currentNewTile.position.y = -currentNewTile.height * 2;
+
+            currentNewTile.animateDown(
+
+                currentNewTile.gridPos.y,
+
+                grid.gridPositionToWorldPosition(
+                    currentNewTile,
+                    currentNewTile.gridPos.x,
+                    currentNewTile.gridPos.y
+                ).y,
+
+                1000
+            );
+        }
+
+    }
+
+    /* Move in the new elements */
+    public moveInNewElements(grid: Grid, newGrid: Tile[]): void
+    {
+
+        this.animateInNewTiles(grid, this.findNewTiles(grid, newGrid));
 
     }
 

@@ -79,16 +79,13 @@ export default class Tile extends GridObject
         return this._tween.onComplete;
     }
 
-    public animateDown(tiles: number, newYPos: number): Phaser.Signal
+    public animateDown(tiles: number, newYPos: number, speed: number = 750): Phaser.Signal
     {
-
         this.clearTween();
 
         this._tween = this.game.add.tween(this)
-            .to({y: newYPos}, 650, Phaser.Easing.Bounce.Out)
+            .to({y: newYPos}, speed, Phaser.Easing.Bounce.Out)
             .start();
-
-        this.gridPos.y += tiles;
 
         return this._tween.onComplete;
     }
@@ -100,6 +97,11 @@ export default class Tile extends GridObject
             this._tween.stop(false);
             this._tween = null;
         }
+    }
+
+    public resize(): void
+    {
+        this.clearTween();
     }
 
     public destroy(): void {
