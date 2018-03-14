@@ -42,7 +42,6 @@ export default class GridRegenerator
         {
             let currentTile: GridObject = floatingTiles[i];
             (<Tile>currentTile).animateDown(
-                1,
                 grid.gridPositionToWorldPosition(
                     currentTile,
                     currentTile.gridPos.x,
@@ -103,8 +102,6 @@ export default class GridRegenerator
             currentNewTile.position.y = -currentNewTile.height * 2;
 
             currentNewTile.animateDown(
-
-                currentNewTile.gridPos.y,
 
                 grid.gridPositionToWorldPosition(
                     currentNewTile,

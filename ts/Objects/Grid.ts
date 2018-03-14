@@ -179,7 +179,11 @@ export default class Grid extends Phaser.Group
     /* Find and destroy an element */
     public destroyElement(element: GridElement): void
     {
-        this.forEach( (currentElement: GridElement, index: number) => {
+        this.forEach( (currentElement: GridElement, x: number, y: number, index: number) => {
+
+            /* So tslint won't give any errors */
+            x = y;
+            y = x;
 
             if (element === currentElement)
             {

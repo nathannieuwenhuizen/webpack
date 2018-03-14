@@ -79,7 +79,7 @@ export default class Tile extends GridObject
         return this._tween.onComplete;
     }
 
-    public animateDown(tiles: number, newYPos: number, speed: number = 750): Phaser.Signal
+    public animateDown(newYPos: number, speed: number = 750): Phaser.Signal
     {
         this.clearTween();
 
