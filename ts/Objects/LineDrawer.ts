@@ -18,14 +18,14 @@ export default class LineDrawer
     }
 
     /* Draw a path */
-    public drawPath(tiles: Tile[]): void
+    public drawPath(tiles: Tile[], lineWidth: number, color: number): void
     {
         this.clearPath();
 
         if (tiles.length <= 1) { return; }
 
-        this._drawGraphics.beginFill(0xff0ff0);
-        this._drawGraphics.lineStyle(15, Math.floor(Math.random() * 16777215));
+        this._drawGraphics.beginFill();
+        this._drawGraphics.lineStyle(lineWidth, color);
 
         this._drawGraphics.moveTo(tiles[0].worldPosition.x, tiles[0].worldPosition.y);
 
