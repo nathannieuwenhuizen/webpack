@@ -17,5 +17,14 @@ export default class ImageButton extends Phaser.Button
 
         this.addChild(this._image);
 
+        this.onInputDown.add(() => {
+            this.scale.set(0.9);
+        });
+        this.onInputOut.add(() => {
+            this.scale.set(1);
+        });
+        this.onInputUp.add(() => {
+            this.scale.set(1);
+        });
     }
 }

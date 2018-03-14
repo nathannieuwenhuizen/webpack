@@ -144,7 +144,7 @@ export default class GameField extends Phaser.Group
     {
         let vmin: number = Math.min(this.game.width, this.game.height);
 
-        let gridSizeMultiplier: number = vmin * 0.9;
+        let gridSizeMultiplier: number = vmin * 0.88;
         this.grid.gridBlockSize = gridSizeMultiplier / this.grid.blocksOnX;
 
         this.grid.position.set(
@@ -152,7 +152,7 @@ export default class GameField extends Phaser.Group
             0
         );
 
-        this._backdropSprite.position.set(this.game.width / 2, this.grid.y + this.grid.height / 2);
+        this._backdropSprite.position.set(this.game.width / 2, this.grid.y + this.grid.height / 2 - 10);
         this._backdropSprite.scale.set(vmin / 720);
         this.y = this.game.height - this.height;
     }
