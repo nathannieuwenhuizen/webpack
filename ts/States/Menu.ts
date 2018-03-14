@@ -86,12 +86,12 @@ export default class Menu extends Phaser.State
     private createSmallButtonContainers(): Phaser.Group {
         let group: Phaser.Group = new Phaser.Group(this.game);
 
-        let settingButton: ImageButton = new ImageButton(this.game, 100, 0, 'ui_menu_button_small', () => {
+        let settingButton: ImageButton = new ImageButton(this.game, 100, 0, 'ui_icon_settings', () => {
             //
         }, this);
         group.add(settingButton);
 
-        let shareButton: ImageButton = new ImageButton(this.game, -100, 0, 'ui_menu_button_small', () => {
+        let shareButton: ImageButton = new ImageButton(this.game, -100, 0, 'popupmenu_icon_twitter', () => {
             //
         }, this);
         group.add(shareButton);

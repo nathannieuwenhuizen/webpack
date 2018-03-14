@@ -81,7 +81,7 @@ export default class Gameplay extends Phaser.State
         this.pauseMenuButton = new ImageButton(this.game, 0, 0, '', this.activateMenu, this );
         this.game.add.existing(this.pauseMenuButton);
 
-        this.socialMenuButton = new ImageButton(this.game, 0, 0, '', this.activateSocial, this );
+        this.socialMenuButton = new ImageButton(this.game, 0, 0, 'popupmenu_icon_twitter', this.activateSocial, this );
         this.game.add.existing(this.socialMenuButton);
         this.resize();
     }
