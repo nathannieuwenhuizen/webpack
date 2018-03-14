@@ -5,7 +5,6 @@ import IGame from '../PluginManagers/IGame';
 import Images from '../Data/Images';
 import Menu from './Menu';
 import Atlases from '../Data/Atlases';
-import { Image } from 'phaser-ce';
 import Spines from '../Data/Spines';
 
 export default class Boot extends Phaser.State
@@ -122,15 +121,6 @@ export default class Boot extends Phaser.State
             this.game.load.spine(assetName, 'assets/spine/' + assetName + '.json');
         });
 
-        // This will be replaced with a propper preloader
-        this.game.load.image(Images.IconTest, './assets/sprites/' + Images.IconTest + '.png');
-        this.game.load.image(Images.CaviaTest, './assets/sprites/' + Images.CaviaTest + '.png');
-
-        this.game.load.image(Images.PopUpMenuBackground, './assets/sprites/' + Images.PopUpMenuBackground + '.png');
-        this.game.load.image(Images.PopUpMenuSmallButton, './assets/sprites/' + Images.PopUpMenuSmallButton + '.png');
-        this.game.load.image(Images.PopUpMenuBigButton, './assets/sprites/' + Images.PopUpMenuBigButton + '.png');
-
-        this.game.load.spine('chips', 'assets/spine/chips.json');
     }
 
     public resize(): void

@@ -4,7 +4,7 @@ import Atlases from '../Data/Atlases';
 export default class ImageButton extends Phaser.Button
 {
     private _image: Phaser.Sprite;
-
+    private _scaleFactor: number = 1;
     constructor(
         game: Phaser.Game, x: number, y: number, key: string, callback: Function, callbackContext: any)
         {
@@ -18,13 +18,20 @@ export default class ImageButton extends Phaser.Button
         this.addChild(this._image);
 
         this.onInputDown.add(() => {
-            this.scale.set(0.9);
+            this._scaleFactor = 0.9;
+            this.resize();
+
         });
         this.onInputOut.add(() => {
-            this.scale.set(1);
+            this._scaleFactor = 1;
+            this.resize();
         });
         this.onInputUp.add(() => {
-            this.scale.set(1);
+            this._scaleFactor = 1;
+            this.resize();
         });
+    }
+    public resize(): void {
+        this.scale.set((this.game.width / GAME_WIDTH) *  this._scaleFactor);
     }
 }

@@ -1,12 +1,10 @@
 import 'phaser-ce';
 
 import Images from '../Data/Images';
-import Spines from '../Data/Spines';
 
 import GameField from '../Objects/GameObjects/GameField';
 import Tile from '../Objects/GridObjects/Tile';
 
-import TextButton from '../UI/TextButton';
 import PauseMenu from '../UI/PauseMenu';
 import Timer from '../BackEnd/Timer';
 import TimeBar from '../UI/TimeBar';
@@ -19,7 +17,6 @@ export default class Gameplay extends Phaser.State
 
     public name: string = Gameplay.Name;
 
-    private _testSprite: Phaser.Sprite;
     private _timeBar: TimeBar;
     private _timerClass: Timer;
 
@@ -45,10 +42,10 @@ export default class Gameplay extends Phaser.State
         this._highscoreBackdropSprite.scale.set(this.game.width / GAME_WIDTH);
         this._highscoreBackdropSprite.x = this.game.width / 2;
 
-        this.pauseMenuButton.scale.set(this.game.width / GAME_WIDTH);
+        this.pauseMenuButton.resize();
         this.pauseMenuButton.position.set(this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
 
-        this.socialMenuButton.scale.set(this.game.width / GAME_WIDTH);
+        this.socialMenuButton.resize();
         this.socialMenuButton.position.set(this.game.width - this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
 
         this._character.position.set(this.game.width / 2, this.game.height * .3);
@@ -66,7 +63,8 @@ export default class Gameplay extends Phaser.State
         this._character = new Character(this.game, 0, 0);
 
         this._timerClass = new Timer();
-        this._timeBar = new TimeBar(this.game, 0, 0);
+        this._timeBar = new TimeBar(this.game);
+        console.log(this._timerClass, this._timeBar);
 
         this._gameField = new GameField(this.game);
         this.game.add.existing(this._gameField);
