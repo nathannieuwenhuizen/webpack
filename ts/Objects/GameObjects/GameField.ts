@@ -24,8 +24,11 @@ export default class GameField extends Phaser.Group
     /* The path that is being drawn */
     private _currentPath: Tile[];
 
+    private _gridMask: Phaser.Graphics;
+
     private _backdropSprite: Phaser.Sprite;
     private _timerBbackdropSprite: Phaser.Sprite;
+
     constructor(game: Phaser.Game)
     {
         super(game);
@@ -39,8 +42,12 @@ export default class GameField extends Phaser.Group
 
         this._backdropSprite.addChild(this._timerBbackdropSprite);
 
+        this._gridMask = new Phaser.Graphics(this.game);
+        this.addChild(this._gridMask);
+
         this.grid = new Grid(this.game, 6, 6, 90, .9);
         this.addChild(this.grid);
+        this.grid.mask = this._gridMask;
 
         this._gridSpawner = new LevelGenerator();
         this._pathChecker = new PathChecker();
@@ -191,30 +198,31 @@ export default class GameField extends Phaser.Group
         this._backdropSprite.position.set(this.game.width / 2, this.grid.y + this.grid.height / 2 - 10);
         this._backdropSprite.scale.set(vmin / 720);
         this.y = this.game.height - this.height;
+
+        this._gridMask.beginFill();
+        this._gridMask.drawRect(0, 0, this._backdropSprite.width, this._backdropSprite.height);
+        this._gridMask.endFill();
     }
 
     public destroy(): void
     {
-        if (this.grid)
-        {
-            this.grid.destroy();
-        }
+        if (this.grid) { this.grid.destroy(); }
         this.grid = null;
 
         this._gridSpawner = null;
 
         this._pathChecker = null;
 
-        if (this._gridInput)
-        {
-            this._gridInput.destroy();
-        }
+        if (this._gridInput) { this._gridInput.destroy(); }
         this._gridInput = null;
-        if (this._lineDrawer)
-        {
-            this._lineDrawer.destroy();
-        }
+
+        if (this._lineDrawer) { this._lineDrawer.destroy(); }
         this._lineDrawer = null;
+
+        this._gridRegenerator = null;
+
+        if (this._gridMask) { this._gridMask.destroy(true); }
+        this._gridMask = null;
     }
 
 }

@@ -99,7 +99,7 @@ export default class GridRegenerator
             grid.add(currentNewTile);
 
             /* Making the animate bounce in from the top */
-            currentNewTile.position.y = -currentNewTile.height * 2;
+            currentNewTile.position.y = -currentNewTile.height;
 
             currentNewTile.animateDown(
 
@@ -109,7 +109,7 @@ export default class GridRegenerator
                     currentNewTile.gridPos.y
                 ).y,
 
-                1000
+                800
             );
         }
 
