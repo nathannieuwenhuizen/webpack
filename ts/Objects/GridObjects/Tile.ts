@@ -43,6 +43,8 @@ export default class Tile extends GridObject
 
         this.addChild(this._iconSprite);
         this.addChild(this._glowSprite);
+
+        this.resize();
     }
 
     /* Set the shape of a tile */

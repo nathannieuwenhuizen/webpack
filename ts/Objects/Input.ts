@@ -7,14 +7,18 @@ export default class Input
     public onDragSnap: Phaser.Signal;
     public onInputUp: Phaser.Signal;
 
+    private _hitAreaMultiplier: number;
+
     private _currentSnap: Tile;
 
-    constructor(game: Phaser.Game)
+    constructor(game: Phaser.Game, hitAreaMultiplier: number = .8)
     {
         this.game = game;
 
         this.onDragSnap = new Phaser.Signal();
         this.onInputUp = new Phaser.Signal();
+
+        this._hitAreaMultiplier = hitAreaMultiplier;
 
         this.game.input.onUp.add(() => this.inputUp());
     }
@@ -34,7 +38,14 @@ export default class Input
         for (let i: number = checkTiles.length; i--; )
         {
             let currentTile: Tile = checkTiles[i];
-            if (currentTile.getBounds().contains(this.game.input.x, this.game.input.y) === false) { continue; }
+            let currentBounds: PIXI.Rectangle = currentTile.getBounds();
+
+            /* Multiplieng the hit area of a tile so it can be easier to drag to side ways tiles */
+            currentBounds.width *= this._hitAreaMultiplier;
+            currentBounds.height *= this._hitAreaMultiplier;
+
+            /* Checking if the mouse is in the tile */
+            if (currentBounds.contains(this.game.input.x, this.game.input.y) === false) { continue; }
 
             if (this._currentSnap === currentTile) { return; }
 

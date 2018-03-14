@@ -160,7 +160,7 @@ export default class GameField extends Phaser.Group
 
         setTimeout( () => {
             this._gridRegenerator.moveInNewElements(this.grid, this.generateNewGrid());
-        }, 850);
+        }, 650);
 
         this.cancelPath();
     }

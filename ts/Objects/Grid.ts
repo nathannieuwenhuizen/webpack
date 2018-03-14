@@ -174,6 +174,8 @@ export default class Grid extends Phaser.Group
 
         element.x = element.gridPos.x * this.gridBlockSize + element.width * element.anchor.x;
         element.y = element.gridPos.y * this.gridBlockSize + element.height * element.anchor.y;
+
+        element.resize();
     }
 
     /* Find and destroy an element */
