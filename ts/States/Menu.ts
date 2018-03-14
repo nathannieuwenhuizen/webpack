@@ -1,6 +1,5 @@
 import 'phaser-ce';
 
-import GamePlay from './Gameplay';
 import Test from './Test';
 import TextButton from '../UI/TextButton';
 import ImageButton from '../UI/ImageButton';
@@ -47,7 +46,7 @@ export default class Menu extends Phaser.State
         this.add.existing(this.smallButtonContainer);
 
         /* Go to gameplay by default */
-        // this.state.start(Gameplay.Name);
+        //this.state.start(Gameplay.Name);
 
         this.resize();
     }

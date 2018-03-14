@@ -55,4 +55,4 @@ namespace WebPackGame
 
 // Creating a game instance
 // It'll be in the global scope and will have no reference
-let game: Phaser.Game = new WebPackGame.Game();
+new WebPackGame.Game();

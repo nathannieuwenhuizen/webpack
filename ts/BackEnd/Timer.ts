@@ -10,40 +10,34 @@ export default class Timer
         this.startTimer();
     }
 
-    public startTimer():void
+    public startTimer(): void
     {
-        let i = 5;
-       let thisTimer = setInterval(function() 
+        let i: number = 5;
+        let thisTimer: any = setInterval(function(): void
         {
-            console.log('count '+(i--));
+            console.log('count ' + (i--));
 
             if (i <= 0)
             {
-                console.log("time up");
+                console.log('time up');
                 clearInterval(thisTimer);
             }
-            
-        },1000);
+        }, 1000);
     }
-    
-    public stopTimer():void
+
+    public stopTimer(): void
     {
        // clearInterval(thisTimer);
     }
 
     public create(): void
     {
-        
-    
-
        // this._timerClass.startTimer();
-
-        
     }
 
-    public shutdown():void
+    public shutdown(): void
     {
-
+        //
     }
 
 }

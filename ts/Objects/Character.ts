@@ -1,5 +1,4 @@
 import 'phaser-ce';
-import Atlases from '../Data/Atlases';
 import IGame from '../PluginManagers/IGame';
 
 export default class Character extends Phaser.Group
