@@ -3,7 +3,31 @@ import 'phaser-ce';
 export default class Timer
 {
 
-   // private _countNumber: number = 60;
+   private _setTimer: any;
+
+   private _countNumber: number = 10;
+   private _maxSeconds: number = 10;
+
+   private _isPaused: boolean;
+   private _hasEnded: boolean;
+
+   public onSecond: Phaser.Signal;
+   public onTimeEnd: Phaser.Signal;
+
+   get CountNumber():number
+   {
+       return this._countNumber;
+   }
+
+   get MaxSeconds():number
+   {
+       return this._maxSeconds;
+   }
+
+   get GetPaused():boolean
+   {
+       return this._isPaused;
+   }
 
     constructor()
     {
@@ -12,38 +36,49 @@ export default class Timer
 
     public startTimer():void
     {
-        let i = 5;
-       let thisTimer = setInterval(function() 
-        {
-            console.log('count '+(i--));
+        this.onSecond = new Phaser.Signal();
 
-            if (i <= 0)
+       this._setTimer = setInterval(() => 
+        {
+            if (!this._isPaused && !this._hasEnded)
             {
-                console.log("time up");
-                clearInterval(thisTimer);
-            }
+                this._countNumber--;
+  
+                this.onSecond.dispatch();
+             }
+             else if (this._countNumber < 1)
+             {
+                 this._hasEnded = true;
+                this.stopTimer();
+             }
             
+
+               
+
+                     
         },1000);
+    }
+
+    public resetTimer(resetSecond:number)
+    {
+        this._countNumber = resetSecond;
     }
     
     public stopTimer():void
     {
-       // clearInterval(thisTimer);
+        clearInterval(this._setTimer);
+
+        this.onTimeEnd = new Phaser.Signal();
+        this.onTimeEnd.dispatch();
     }
 
-    public create(): void
+    public addSeconds(amountAdded:number):void
     {
-        
-    
-
-       // this._timerClass.startTimer();
-
-        
+        this._countNumber += amountAdded;
     }
 
     public shutdown():void
     {
 
     }
-
 }

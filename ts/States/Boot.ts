@@ -125,6 +125,7 @@ export default class Boot extends Phaser.State
         // This will be replaced with a propper preloader
         this.game.load.image(Images.IconTest, './assets/sprites/' + Images.IconTest + '.png');
         this.game.load.image(Images.CaviaTest, './assets/sprites/' + Images.CaviaTest + '.png');
+        this.game.load.image(Images.PlaceholderBar, './assets/sprites/' + Images.PlaceholderBar + '.png');
         this.game.load.spine('chips', 'assets/spine/chips.json');
     }
 

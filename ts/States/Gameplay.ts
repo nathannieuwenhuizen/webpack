@@ -6,6 +6,7 @@ import TextButton from '../UI/TextButton';
 import PauseMenu from '../UI/PauseMenu';
 import Timer from '../BackEnd/Timer';
 import TimeBar from '../UI/TimeBar';
+import TimeBarScaler from '../BackEnd/TimeBarScaler';
 
 export default class Gameplay extends Phaser.State
 {
@@ -15,6 +16,7 @@ export default class Gameplay extends Phaser.State
 
     private _timeBar: TimeBar;
     private _timerClass: Timer;
+    private _timeScalerClass: TimeBarScaler;
 
     private pauseMenuButton: TextButton;
 
@@ -26,22 +28,19 @@ export default class Gameplay extends Phaser.State
     }
 
     public resize(): void {
-        console.log('resize');
+       // console.log('resize');
         this._pauseMenu.resize();
     }
 
     public pause(paused: boolean): void
     {
-        console.log(paused);
+      //  console.log(paused);
         this.game.paused = paused;
     }
 
     public create(): void
     {
         super.create(this.game);
-
-        this._timerClass = new Timer();
-        this._timeBar = new TimeBar(this.game, 0, 0);
 
         this.game.add.text(0, 0, 'this is the gameplay state', {
             font: '50px',
@@ -53,7 +52,12 @@ export default class Gameplay extends Phaser.State
         this._pauseMenu.onContinue.add(this.disableMenu, this);
         this.pauseMenuButton = new TextButton(this.game, 100, 100, '||', {font: '50px',
         fill: '#fff', align: 'center'}, this.activateMenu, this );
-        this.resize();
+
+        this._timerClass = new Timer();
+        this._timeBar = new TimeBar(this.game, 0, 0);
+        this._timeScalerClass = new TimeBarScaler(this.game);
+        
+        this.resize();  
     }
 
     public shutdown(): void
@@ -73,6 +77,12 @@ export default class Gameplay extends Phaser.State
     private disableMenu(): void
     {
         this.pause(false);
+    }
+
+
+    private testAddSeconds():void
+    {
+        this._timerClass.addSeconds(10);
     }
 
 }
