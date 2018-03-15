@@ -195,12 +195,14 @@ export default class GameField extends Phaser.Group
             0
         );
 
-        this._backdropSprite.position.set(this.game.width / 2, this.grid.y + this.grid.height / 2 - 10);
+        this._backdropSprite.position.set(
+            this.grid.x + this.grid.width / 2,
+            this.grid.y + this.grid.height / 2 - 10
+        );
         this._backdropSprite.scale.set(vmin / 720);
 
-        this.y = this.game.height - this.height * .9;
-
-        this._gridMask.beginFill();
+        this._gridMask.clear();
+        this._gridMask.beginFill(0xffa500);
         this._gridMask.drawRect(this.grid.x, this.grid.y, this.grid.width, this.grid.height);
         this._gridMask.endFill();
     }

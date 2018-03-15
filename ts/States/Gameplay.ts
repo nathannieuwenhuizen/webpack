@@ -37,26 +37,6 @@ export default class Gameplay extends Phaser.State
         super();
     }
 
-    public resize(): void {
-        this._pauseMenu.resize();
-
-        this._gameField.resize();
-
-        this._highscoreBackdropSprite.scale.set(this.game.width / GAME_WIDTH);
-        this._highscoreBackdropSprite.x = this.game.width / 2;
-
-        this._backgroundSprite.scale.set(this.game.width / GAME_WIDTH);
-        this._backgroundSprite.y = this._highscoreBackdropSprite.height;
-
-        this.pauseMenuButton.resize();
-        this.pauseMenuButton.position.set(this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
-
-        this.socialMenuButton.resize();
-        this.socialMenuButton.position.set(this.game.width - this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
-
-        this._character.position.set(this.game.width / 2, this.game.height * .3);
-    }
-
     public pause(paused: boolean): void
     {
         this.game.paused = paused;
@@ -98,15 +78,6 @@ export default class Gameplay extends Phaser.State
         console.log('new path!: ', path);
     }
 
-    public shutdown(): void
-    {
-        super.shutdown(this.game);
-
-        this._gameField.destroy();
-        this._gameField = null;
-
-    }
-
     private activateMenu(): void
     {
         //pause the game
@@ -125,6 +96,57 @@ export default class Gameplay extends Phaser.State
     {
         this.pause(false);
         this.pauseMenuButton.visible = true;
+    }
+
+    public resize(): void {
+
+        let vmin: number = Math.min(this.game.width, this.game.height);
+
+        this._pauseMenu.resize();
+
+        this._highscoreBackdropSprite.scale.set(this.game.width / GAME_WIDTH);
+        this._highscoreBackdropSprite.x = this.game.width / 2;
+
+        this._backgroundSprite.scale.set(this.game.width / GAME_WIDTH);
+        this._backgroundSprite.y = this._highscoreBackdropSprite.height;
+
+        this.pauseMenuButton.resize();
+        this.pauseMenuButton.position.set(this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
+
+        this.socialMenuButton.resize();
+        this.socialMenuButton.position.set(this.game.width - this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
+
+        this._gameField.resize();
+
+        /* How much the space the grid can use on the screen in pixels */
+        let gridHeightSpace: number =
+            Math.min(
+
+                this.game.height
+                - this._backgroundSprite.height
+                - this._highscoreBackdropSprite.height
+                + this.game.height * .08 // Offset form the background
+
+                , vmin
+            );
+
+        this._gameField.width = this._gameField.height = gridHeightSpace;
+
+        this._gameField.position.set(
+            this.game.width / 2 - this._gameField.width / 2,
+            this.game.height - this._gameField.height * .92
+        );
+
+        this._character.position.set(this.game.width / 2, this.game.height * .3);
+    }
+
+    public shutdown(): void
+    {
+        super.shutdown(this.game);
+
+        this._gameField.destroy();
+        this._gameField = null;
+
     }
 
 }
