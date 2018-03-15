@@ -28,6 +28,7 @@ export default class Gameplay extends Phaser.State
     private _pauseMenu: PauseMenu;
 
     private _highscoreBackdropSprite: Phaser.Sprite;
+    private _backgroundSprite: Phaser.Sprite;
 
     private _character: Character;
 
@@ -41,6 +42,9 @@ export default class Gameplay extends Phaser.State
 
         this._highscoreBackdropSprite.scale.set(this.game.width / GAME_WIDTH);
         this._highscoreBackdropSprite.x = this.game.width / 2;
+
+        this._backgroundSprite.scale.set(this.game.width / GAME_WIDTH);
+        this._backgroundSprite.y = this._highscoreBackdropSprite.height;
 
         this.pauseMenuButton.resize();
         this.pauseMenuButton.position.set(this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
@@ -60,11 +64,14 @@ export default class Gameplay extends Phaser.State
     {
         super.create(this.game);
 
-        this._character = new Character(this.game, 0, 0);
-
         this._timerClass = new Timer();
         this._timeBar = new TimeBar(this.game);
         console.log(this._timerClass, this._timeBar);
+
+        this._backgroundSprite = new Phaser.Sprite(this.game, 0, 0, Atlases.Interface, 'background');
+        this.game.add.existing(this._backgroundSprite);
+
+        this._character = new Character(this.game, 0, 0);
 
         this._gameField = new GameField(this.game);
         this.game.add.existing(this._gameField);
