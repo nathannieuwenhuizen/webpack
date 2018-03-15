@@ -40,6 +40,8 @@ export default class Gameplay extends Phaser.State
     public resize(): void {
         this._pauseMenu.resize();
 
+        this._gameField.resize();
+
         this._highscoreBackdropSprite.scale.set(this.game.width / GAME_WIDTH);
         this._highscoreBackdropSprite.x = this.game.width / 2;
 

@@ -14,7 +14,7 @@ export default class Character extends Phaser.Group
         this._spine.setAnimationByName(
             0,          //Track index
             'idle',     //Animation's name
-            false        //If the animation should loop or not
+            true        //If the animation should loop or not
         );
         this.addChild(this._spine);
 
