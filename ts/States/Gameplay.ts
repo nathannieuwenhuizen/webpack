@@ -3,7 +3,7 @@ import 'phaser-ce';
 import Images from '../Data/Images';
 
 import GameField from '../Objects/GameObjects/GameField';
-import Tile from '../Objects/GridObjects/Tile';
+import GameTile from '../Objects/GridObjects/GameTile';
 
 import PauseMenu from '../UI/PauseMenu';
 import Timer from '../BackEnd/Timer';
@@ -28,27 +28,13 @@ export default class Gameplay extends Phaser.State
     private _pauseMenu: PauseMenu;
 
     private _highscoreBackdropSprite: Phaser.Sprite;
+    private _backgroundSprite: Phaser.Sprite;
 
     private _character: Character;
 
     constructor()
     {
         super();
-    }
-
-    public resize(): void {
-        this._pauseMenu.resize();
-
-        this._highscoreBackdropSprite.scale.set(this.game.width / GAME_WIDTH);
-        this._highscoreBackdropSprite.x = this.game.width / 2;
-
-        this.pauseMenuButton.resize();
-        this.pauseMenuButton.position.set(this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
-
-        this.socialMenuButton.resize();
-        this.socialMenuButton.position.set(this.game.width - this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
-
-        this._character.position.set(this.game.width / 2, this.game.height * .3);
     }
 
     public pause(paused: boolean): void
@@ -60,11 +46,14 @@ export default class Gameplay extends Phaser.State
     {
         super.create(this.game);
 
-        this._character = new Character(this.game, 0, 0);
-
         this._timerClass = new Timer();
         this._timeBar = new TimeBar(this.game);
         console.log(this._timerClass, this._timeBar);
+
+        this._backgroundSprite = new Phaser.Sprite(this.game, 0, 0, Atlases.Interface, 'background');
+        this.game.add.existing(this._backgroundSprite);
+
+        this._character = new Character(this.game, 0, 0);
 
         this._gameField = new GameField(this.game);
         this.game.add.existing(this._gameField);
@@ -84,18 +73,9 @@ export default class Gameplay extends Phaser.State
         this.resize();
     }
 
-    public newPathCreated(path: Tile[]): void
+    public newPathCreated(path: GameTile[]): void
     {
         console.log('new path!: ', path);
-    }
-
-    public shutdown(): void
-    {
-        super.shutdown(this.game);
-
-        this._gameField.destroy();
-        this._gameField = null;
-
     }
 
     private activateMenu(): void
@@ -116,6 +96,57 @@ export default class Gameplay extends Phaser.State
     {
         this.pause(false);
         this.pauseMenuButton.visible = true;
+    }
+
+    public resize(): void {
+
+        let vmin: number = Math.min(this.game.width, this.game.height);
+
+        this._pauseMenu.resize();
+
+        this._highscoreBackdropSprite.scale.set(this.game.width / GAME_WIDTH);
+        this._highscoreBackdropSprite.x = this.game.width / 2;
+
+        this._backgroundSprite.scale.set(this.game.width / GAME_WIDTH);
+        this._backgroundSprite.y = this._highscoreBackdropSprite.height;
+
+        this.pauseMenuButton.resize();
+        this.pauseMenuButton.position.set(this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
+
+        this.socialMenuButton.resize();
+        this.socialMenuButton.position.set(this.game.width - this.pauseMenuButton.width / 2, this.pauseMenuButton.height / 2);
+
+        this._gameField.resize();
+
+        /* How much the space the grid can use on the screen in pixels */
+        let gridHeightSpace: number =
+            Math.min(
+
+                this.game.height
+                - this._backgroundSprite.height
+                - this._highscoreBackdropSprite.height
+                + this.game.height * .08 // Offset form the background
+
+                , vmin
+            );
+
+        this._gameField.width = this._gameField.height = gridHeightSpace;
+
+        this._gameField.position.set(
+            this.game.width / 2 - this._gameField.width / 2,
+            this.game.height - this._gameField.height * .92
+        );
+
+        this._character.position.set(this.game.width / 2, this.game.height * .3);
+    }
+
+    public shutdown(): void
+    {
+        super.shutdown(this.game);
+
+        this._gameField.destroy();
+        this._gameField = null;
+
     }
 
 }

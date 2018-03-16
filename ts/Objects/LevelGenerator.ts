@@ -1,12 +1,12 @@
-import Tile, {TileShapes, TileIcons} from './GridObjects/Tile';
+import GameTile, {TileShapes, TileIcons} from './GridObjects/GameTile';
 import Grid from './Grid';
 
 export default class LevelGenerator
 {
     /* Returns a tile array with nice generated values */
-    public generateGrid(grid: Grid, createTile: (gridX: number, gridY: number, shape: TileShapes, icon: TileIcons) => Tile): Tile[]
+    public generateGrid(grid: Grid, createTile: (gridX: number, gridY: number, shape?: TileShapes, icon?: TileIcons) => GameTile): GameTile[]
     {
-        let resultArray: Tile[] = [];
+        let resultArray: GameTile[] = [];
 
         /* Looping trough all the grid blocks */
         for (let x: number = grid.blocksOnX; x--; )
@@ -31,17 +31,21 @@ export default class LevelGenerator
     /* Generate a random shape from the TileShapes enum */
     private getRandomShape(): TileShapes
     {
+        let enumLength: number = Object.keys(TileShapes).length;
         let randomValue: number = Math.random();
 
-        return randomValue < .333 ? TileShapes.blue : randomValue < .666 ? TileShapes.green : TileShapes.red;
+        let index: number = Math.floor(randomValue * enumLength);
+        return <TileShapes>Object.keys(TileShapes)[index];
     }
 
     /* Generate a random icon from the TileIcons enum */
     private getRandomIcon(): TileIcons
     {
+        let enumLength: number = Object.keys(TileIcons).length;
         let randomValue: number = Math.random();
 
-        return randomValue < .33 ? TileIcons.circle : randomValue < .666 ? TileIcons.square : TileIcons.triangle;
+        let index: number = Math.floor(randomValue * enumLength);
+        return <TileIcons>Object.keys(TileIcons)[index];
     }
 
 }

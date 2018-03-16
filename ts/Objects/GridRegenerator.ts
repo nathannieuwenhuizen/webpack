@@ -1,4 +1,4 @@
-import Tile from './GridObjects/Tile';
+import GameTile from './GridObjects/GameTile';
 import Grid from './Grid';
 import GridObject from './GridObjects/GridObject';
 
@@ -41,14 +41,14 @@ export default class GridRegenerator
         for (let i: number = floatingTiles.length; i--; )
         {
             let currentTile: GridObject = floatingTiles[i];
-            (<Tile>currentTile).animateDown(
+            (<GameTile>currentTile).animateDown(
                 grid.gridPositionToWorldPosition(
                     currentTile,
                     currentTile.gridPos.x,
                     currentTile.gridPos.y + 1
                 ).y
             );
-            (<Tile>currentTile).gridPos.y = currentTile.gridPos.y + 1;
+            (<GameTile>currentTile).gridPos.y = currentTile.gridPos.y + 1;
 
         }
 
@@ -60,14 +60,14 @@ export default class GridRegenerator
 
     }
 
-    private findNewTiles(grid: Grid, newGrid: Tile[]): Tile[]
+    private findNewTiles(grid: Grid, newGrid: GameTile[]): GameTile[]
     {
-        let newTiles: Tile[] = [];
+        let newTiles: GameTile[] = [];
 
         /* Finding the new tiles */
         for (let i: number = newGrid.length; i--; )
         {
-            let currentNewTile: Tile = newGrid[i];
+            let currentNewTile: GameTile = newGrid[i];
             let alreadyExists: boolean = false;
 
             grid.forEach((element: GridObject) => {
@@ -89,12 +89,12 @@ export default class GridRegenerator
 
     }
 
-    private animateInNewTiles(grid: Grid, newTiles: Tile[]): void
+    private animateInNewTiles(grid: Grid, newTiles: GameTile[]): void
     {
         /* Animating in the new tiles */
         for (let i: number = newTiles.length; i--; )
         {
-            let currentNewTile: Tile = newTiles[i];
+            let currentNewTile: GameTile = newTiles[i];
 
             grid.add(currentNewTile);
 
@@ -116,7 +116,7 @@ export default class GridRegenerator
     }
 
     /* Move in the new elements */
-    public moveInNewElements(grid: Grid, newGrid: Tile[]): void
+    public moveInNewElements(grid: Grid, newGrid: GameTile[]): void
     {
 
         this.animateInNewTiles(grid, this.findNewTiles(grid, newGrid));

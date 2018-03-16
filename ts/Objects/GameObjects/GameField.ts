@@ -7,7 +7,7 @@ import Input from '../Input';
 
 import GridRegenerator from '../GridRegenerator';
 
-import Tile, {TileShapes, TileIcons} from '../GridObjects/Tile';
+import GameTile, {TileShapes, TileIcons} from '../GridObjects/GameTile';
 import Atlases from '../../Data/Atlases';
 import { gridElementTypes } from '../GridObjects/GridObject';
 
@@ -22,7 +22,7 @@ export default class GameField extends Phaser.Group
     private _gridRegenerator: GridRegenerator;
 
     /* The path that is being drawn */
-    private _currentPath: Tile[];
+    private _currentPath: GameTile[];
 
     private _gridMask: Phaser.Graphics;
 
@@ -67,10 +67,10 @@ export default class GameField extends Phaser.Group
     private setupGrid(): void
     {
         /* Generating the grid */
-        let generatedLevel: Tile[] = this.generateNewGrid();
+        let generatedLevel: GameTile[] = this.generateNewGrid();
 
         /* Adding the generated grid to the actual grid */
-        generatedLevel.forEach((tile: Tile) => {
+        generatedLevel.forEach((tile: GameTile) => {
             this.grid.add(tile);
         });
 
@@ -81,17 +81,17 @@ export default class GameField extends Phaser.Group
         this.resize();
     }
 
-    private generateNewGrid(): Tile[]
+    private generateNewGrid(): GameTile[]
     {
         return this._gridSpawner.generateGrid(this.grid, (gridX: number, gridY: number, shape: TileShapes, icon: TileIcons) => {
 
-            return new Tile(this.game, gridX, gridY, shape, icon);
+            return new GameTile(this.game, gridX, gridY, shape, icon);
 
         });
     }
 
     /* What happens if the input finds, the mouse is draggig over a new tile */
-    private addNewTileToPath(tile: Tile): void
+    private addNewTileToPath(tile: GameTile): void
     {
         /* Checking if the tile is already in the path */
         for (let i: number = this._currentPath.length; i--; )
@@ -173,14 +173,14 @@ export default class GameField extends Phaser.Group
     }
 
     /* What happends when a new path is created */
-    private newPathCreated(path: Tile[]): void
+    private newPathCreated(path: GameTile[]): void
     {
         this._lineDrawer.drawPath(path, 15, 0x00ff00);
     }
 
     public update(): void
     {
-        this._gridInput.checkInputOnTiles(<Tile[]>this.grid.get(null, null, null, gridElementTypes.tile));
+        this._gridInput.checkInputOnTiles(<GameTile[]>this.grid.get(null, null, null, gridElementTypes.tile));
     }
 
     public resize(): void
@@ -195,12 +195,15 @@ export default class GameField extends Phaser.Group
             0
         );
 
-        this._backdropSprite.position.set(this.game.width / 2, this.grid.y + this.grid.height / 2 - 10);
+        this._backdropSprite.position.set(
+            this.grid.x + this.grid.width / 2,
+            this.grid.y + this.grid.height / 2 - 10
+        );
         this._backdropSprite.scale.set(vmin / 720);
-        this.y = this.game.height - this.height;
 
-        this._gridMask.beginFill();
-        this._gridMask.drawRect(0, 0, this._backdropSprite.width, this._backdropSprite.height);
+        this._gridMask.clear();
+        this._gridMask.beginFill(0xffa500);
+        this._gridMask.drawRect(this.grid.x, this.grid.y, this.grid.width, this.grid.height);
         this._gridMask.endFill();
     }
 
