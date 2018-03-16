@@ -6,16 +6,16 @@ import Atlases from '../../Data/Atlases';
 
 export enum TileIcons
 {
-    triangle = 'helmet',
-    circle = 'magic',
-    square = 'shield'
+    helmet = 'helmet',
+    magic = 'magic',
+    shield = 'shield'
 }
 
 export enum TileShapes
 {
     blue = 'blue',
     red = 'red',
-    green = 'purple'
+    purple = 'purple'
 }
 
 export default class Tile extends GridObject
