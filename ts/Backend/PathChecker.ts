@@ -30,8 +30,8 @@ export default class PathChecker
 
         for (let i: number = tiles.length; i--; )
         {
-            icons.push(tiles[i].icon);
-            shapes.push(tiles[i].shape);
+            if (tiles[i].icon) { icons.push(tiles[i].icon); }
+            if (tiles[i].shape) { shapes.push(tiles[i].shape); }
         }
 
         /* If a path is all opposite or all the same, return true */
