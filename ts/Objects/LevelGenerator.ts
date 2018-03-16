@@ -4,7 +4,7 @@ import Grid from './Grid';
 export default class LevelGenerator
 {
     /* Returns a tile array with nice generated values */
-    public generateGrid(grid: Grid, createTile: (gridX: number, gridY: number, shape: TileShapes, icon: TileIcons) => Tile): Tile[]
+    public generateGrid(grid: Grid, createTile: (gridX: number, gridY: number, shape?: TileShapes, icon?: TileIcons) => Tile): Tile[]
     {
         let resultArray: Tile[] = [];
 
