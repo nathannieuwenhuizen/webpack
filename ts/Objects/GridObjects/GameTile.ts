@@ -7,16 +7,16 @@ import FrameNames from '../../Data/FrameNames';
 
 export enum TileIcons
 {
-    triangle = 'helmet',
-    circle = 'magic',
-    square = 'shield'
+    helmet = 'helmet',
+    magic = 'magic',
+    shield = 'shield'
 }
 
 export enum TileShapes
 {
     blue = 'blue',
     red = 'red',
-    green = 'purple'
+    purple = 'purple'
 }
 
 export default class GameTile extends GridObject
