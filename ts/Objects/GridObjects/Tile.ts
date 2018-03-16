@@ -3,6 +3,7 @@ import 'phaser-ce';
 import GridObject from './GridObject';
 import {gridElementTypes} from './GridObject';
 import Atlases from '../../Data/Atlases';
+import FrameNames from '../../Data/FrameNames';
 
 export enum TileIcons
 {
@@ -30,7 +31,7 @@ export default class Tile extends GridObject
 
     constructor(game: Phaser.Game, gridX: number, gridY: number, shape: TileShapes, icon?: TileIcons)
     {
-        super(game, gridX, gridY, 'ui_ingame_icon_backdrop', gridElementTypes.tile);
+        super(game, gridX, gridY, FrameNames.InGameIconBackdrop, gridElementTypes.tile);
 
         this._iconSprite = new Phaser.Sprite(game, 0, 0, Atlases.Interface, '');
         this._iconSprite.anchor.set(.5);
@@ -51,8 +52,8 @@ export default class Tile extends GridObject
     /* Set the shape of a tile */
     set shape(value: TileShapes)
     {
-        this.frameName = 'ui_ingame_icon_' + value;
-        this._glowSprite.frameName = 'ui_ingame_icon_glow_' + value;
+        this.frameName = FrameNames.InGameIcon + value;
+        this._glowSprite.frameName = FrameNames.InGameIconGlow + value;
         this._shape = value;
     }
     get shape(): TileShapes
@@ -63,7 +64,7 @@ export default class Tile extends GridObject
     /* Set the icon of a tile */
     set icon(value: TileIcons)
     {
-        this._iconSprite.frameName = 'ui_ingame_icon_' + value;
+        this._iconSprite.frameName = FrameNames.InGameIcon + value;
         this._icon = value;
         this._iconSprite.visible = true;
     }
