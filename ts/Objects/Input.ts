@@ -1,4 +1,4 @@
-import Tile from './GridObjects/Tile';
+import GameTile from './GridObjects/GameTile';
 
 export default class Input
 {
@@ -9,7 +9,7 @@ export default class Input
 
     private _hitAreaMultiplier: number;
 
-    private _currentSnap: Tile;
+    private _currentSnap: GameTile;
 
     constructor(game: Phaser.Game, hitAreaMultiplier: number = .8)
     {
@@ -31,13 +31,13 @@ export default class Input
     }
 
     /* Call this in the update so that the class will fire it's 'onDragSnap' signal when a new tile is snapped */
-    public checkInputOnTiles(checkTiles: Tile[]): void
+    public checkInputOnTiles(checkTiles: GameTile[]): void
     {
         if (this.game.input.activePointer.isDown === false) { return; }
 
         for (let i: number = checkTiles.length; i--; )
         {
-            let currentTile: Tile = checkTiles[i];
+            let currentTile: GameTile = checkTiles[i];
             let currentBounds: PIXI.Rectangle = currentTile.getBounds();
 
             /* Multiplieng the hit area of a tile so it can be easier to drag to side ways tiles */

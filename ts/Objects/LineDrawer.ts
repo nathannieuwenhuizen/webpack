@@ -1,6 +1,6 @@
 import 'phaser-ce';
 
-import Tile from './GridObjects/Tile';
+import GameTile from './GridObjects/GameTile';
 
 export default class LineDrawer
 {
@@ -18,7 +18,7 @@ export default class LineDrawer
     }
 
     /* Draw a path */
-    public drawPath(tiles: Tile[], lineWidth: number, color: number): void
+    public drawPath(tiles: GameTile[], lineWidth: number, color: number): void
     {
         this.clearPath();
 
@@ -31,7 +31,7 @@ export default class LineDrawer
 
         for (let i: number = 1; i < tiles.length; i++)
         {
-            let currentTile: Tile = tiles[i];
+            let currentTile: GameTile = tiles[i];
 
             this._drawGraphics.lineTo(currentTile.worldPosition.x, currentTile.worldPosition.y);
             this._drawGraphics.moveTo(currentTile.worldPosition.x, currentTile.worldPosition.y);

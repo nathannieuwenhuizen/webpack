@@ -1,11 +1,11 @@
 import 'phaser-ce';
-import Tile, { TileIcons, TileShapes } from '../Objects/GridObjects/Tile';
+import GameTile, { TileIcons, TileShapes } from '../Objects/GridObjects/GameTile';
 
 export default class PathChecker
 {
 
     /* Returns if a tile is a neighbour of the current tile */
-    public isNeighbour(currentTile: Tile, possibleTile: Tile, neighbourRange: number = 1): boolean
+    public isNeighbour(currentTile: GameTile, possibleTile: GameTile, neighbourRange: number = 1): boolean
     {
         let minX: number = currentTile.gridPos.x - neighbourRange;
         let minY: number = currentTile.gridPos.y - neighbourRange;
@@ -23,7 +23,7 @@ export default class PathChecker
     }
 
     /* Return if a patern is possible */
-    public isPatternPossible(tiles: Tile[]): boolean
+    public isPatternPossible(tiles: GameTile[]): boolean
     {
         let icons: TileIcons[] = [];
         let shapes: TileShapes[] = [];

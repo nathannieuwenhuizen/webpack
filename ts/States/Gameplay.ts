@@ -3,7 +3,7 @@ import 'phaser-ce';
 import Images from '../Data/Images';
 
 import GameField from '../Objects/GameObjects/GameField';
-import Tile from '../Objects/GridObjects/Tile';
+import GameTile from '../Objects/GridObjects/GameTile';
 
 import PauseMenu from '../UI/PauseMenu';
 import Timer from '../BackEnd/Timer';
@@ -73,7 +73,7 @@ export default class Gameplay extends Phaser.State
         this.resize();
     }
 
-    public newPathCreated(path: Tile[]): void
+    public newPathCreated(path: GameTile[]): void
     {
         console.log('new path!: ', path);
     }

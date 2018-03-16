@@ -19,7 +19,7 @@ export enum TileShapes
     green = 'purple'
 }
 
-export default class Tile extends GridObject
+export default class GameTile extends GridObject
 {
     private _shape: TileShapes;
     private _icon: TileIcons;

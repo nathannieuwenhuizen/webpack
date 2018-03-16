@@ -1,12 +1,12 @@
-import Tile, {TileShapes, TileIcons} from './GridObjects/Tile';
+import GameTile, {TileShapes, TileIcons} from './GridObjects/GameTile';
 import Grid from './Grid';
 
 export default class LevelGenerator
 {
     /* Returns a tile array with nice generated values */
-    public generateGrid(grid: Grid, createTile: (gridX: number, gridY: number, shape?: TileShapes, icon?: TileIcons) => Tile): Tile[]
+    public generateGrid(grid: Grid, createTile: (gridX: number, gridY: number, shape?: TileShapes, icon?: TileIcons) => GameTile): GameTile[]
     {
-        let resultArray: Tile[] = [];
+        let resultArray: GameTile[] = [];
 
         /* Looping trough all the grid blocks */
         for (let x: number = grid.blocksOnX; x--; )
