@@ -7,6 +7,22 @@ body, html {
     padding: 0px;
     background-color: #36454F;
     overflow: hidden;
+
+    
 }
 
+@media screen and (orientation:landscape) 
+        {
+            .rotateWarning
+    {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            background: url(sprites/warning.png), rgb(255, 255, 255);
+            background-size: contain;
+            background-repeat: no-repeat; 
+            background-position: center;
+        }
+        }
 @import 'component';

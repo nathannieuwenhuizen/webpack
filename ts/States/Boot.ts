@@ -5,7 +5,6 @@ import IGame from '../PluginManagers/IGame';
 import Images from '../Data/Images';
 import Menu from './Menu';
 import Atlases from '../Data/Atlases';
-import { Image } from 'phaser-ce';
 import Spines from '../Data/Spines';
 
 export default class Boot extends Phaser.State
@@ -24,6 +23,7 @@ export default class Boot extends Phaser.State
     public init(): void
     {
         if (this.game.device.desktop) {
+
             this.scale.pageAlignHorizontally = true;
             this.scale.windowConstraints.bottom = 'visual';
 
@@ -38,6 +38,8 @@ export default class Boot extends Phaser.State
             });
             this.scaleCanvasContain();
         } else {
+            let rotateScreen: any = document.getElementById('rotateWarning');
+            rotateScreen.classList.add('rotateWarning');
             this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
             this.scale.fullScreenScaleMode = Phaser.ScaleManager.USER_SCALE;
 
@@ -122,11 +124,14 @@ export default class Boot extends Phaser.State
             this.game.load.spine(assetName, 'assets/spine/' + assetName + '.json');
         });
 
+<<<<<<< HEAD
         // This will be replaced with a propper preloader
         this.game.load.image(Images.IconTest, './assets/sprites/' + Images.IconTest + '.png');
         this.game.load.image(Images.CaviaTest, './assets/sprites/' + Images.CaviaTest + '.png');
         this.game.load.image(Images.PlaceholderBar, './assets/sprites/' + Images.PlaceholderBar + '.png');
         this.game.load.spine('chips', 'assets/spine/chips.json');
+=======
+>>>>>>> a30b436599de9482a387a1900de60fc07f9dc3f2
     }
 
     public resize(): void

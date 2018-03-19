@@ -7,9 +7,10 @@ export default class TimeBar extends Phaser.Group
 {
 
     private _timeBar: Phaser.Sprite;
-    private _maxWidth: number;
-    private _maxHeight: number;
+    //private _maxWidth: number;
+    //private _maxHeight: number;
 
+<<<<<<< HEAD
     private _timeMask: Phaser.Graphics;
     private _maskWidth: number; 
 
@@ -33,6 +34,13 @@ export default class TimeBar extends Phaser.Group
         super(game);
         this._maxWidth = maxWidth;
         this._maxHeight = maxHeight;
+=======
+    constructor(game: Phaser.Game/*, x: number, y: number, maxWidth?: number, maxHeight?: number*/)
+    {
+        super(game, 0, 0);
+        //this._maxWidth = maxWidth;
+        //this._maxHeight = maxHeight;
+>>>>>>> a30b436599de9482a387a1900de60fc07f9dc3f2
         this.game.add.existing(this);
         
         
@@ -44,9 +52,9 @@ export default class TimeBar extends Phaser.Group
         this._timerClass = new Timer();
     }
 
-    
     public addSprite(): void
     {
+<<<<<<< HEAD
         this._timeBar = this.game.add.sprite(this.game.width / 125, this.game.height / 2, Images.PlaceholderBar); 
     }
 
@@ -76,9 +84,14 @@ export default class TimeBar extends Phaser.Group
 
 
 
+=======
+
+        this._timeBar = this.game.add.sprite(this.game.width / 2, this.game.height / 2, Images.PlaceholderBar);
+    }
+
+>>>>>>> a30b436599de9482a387a1900de60fc07f9dc3f2
     public shutdown(): void
     {
-      
         this._timeBar.destroy(true);
         this._timeBar = null;
 
