@@ -103,7 +103,9 @@ module.exports = {
                 './template/*.html',
                 './ts/*.ts',
                 './sass/*.scss',
-                './ts/*.js'
+                './ts/*.js',
+                './assets/**/*.png',
+                './atlas_assets/**/*.png'
             ],
             server: {
                 baseDir: ['./builds/dev']
