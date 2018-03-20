@@ -5,8 +5,8 @@ export default class Timer
 
    private _setTimer: any;
 
-   private _countNumber: number = 10;
-   private _maxSeconds: number = 10;
+   private _countNumber: number = 2;
+   private _maxSeconds: number = 2;
 
    private _isPaused: boolean;
    private _hasEnded: boolean;
@@ -28,6 +28,7 @@ export default class Timer
    {
        return this._isPaused;
    }
+   
 
     constructor()
     {
@@ -40,28 +41,33 @@ export default class Timer
 
        this._setTimer = setInterval(() => 
         {
+
+            if (this._countNumber < 1)
+             {
+                 this._hasEnded = true;
+                 this.stopTimer();
+                // this.onSecond.dispose();
+             }        
+
             if (!this._isPaused && !this._hasEnded)
             {
                 this._countNumber--;
   
                 this.onSecond.dispatch();
              }
-             else if (this._countNumber < 1)
-             {
-                 this._hasEnded = true;
-                this.stopTimer();
-             }
-            
-
-               
-
-                     
+             
+             
         },1000);
     }
 
     public resetTimer(resetSecond:number)
     {
         this._countNumber = resetSecond;
+    }
+
+    public pauseTimer():void
+    {
+        clearInterval(this._setTimer);
     }
     
     public stopTimer():void
@@ -79,6 +85,6 @@ export default class Timer
 
     public shutdown():void
     {
-
+        //
     }
 }

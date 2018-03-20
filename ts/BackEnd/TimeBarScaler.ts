@@ -8,7 +8,10 @@ export default class TimeBarScaler
     private _timerScript: Timer;
     private _timeBarScript: TimeBar;
 
+    private _timeBarTotalSeconds: number;
     private _timeBarSecond: number;
+
+    private _scalePercentage: number;
 
     constructor(game: Phaser.Game)
     {
@@ -23,16 +26,12 @@ export default class TimeBarScaler
         // adjust TimeBar.ts _maskWidth with get set
         // by signal (send parameter?)
 
-        let totalSeconds = this._timerScript.MaxSeconds;
-        let currentSecond = this._timerScript.CountNumber;
+       this._timeBarTotalSeconds = this._timerScript.MaxSeconds;
+        this._timeBarSecond = this._timerScript.CountNumber;
 
-        let percentStage = (currentSecond - totalSeconds) / totalSeconds;
+        this._scalePercentage = (this._timeBarSecond - this._timeBarTotalSeconds) / this._timeBarTotalSeconds;
 
-       // this._timeBarSecond = this._timerScript.CountNumber;
-        this._timeBarScript.drawMask(percentStage);
-        
-        //console.log(percentStage);
-        console.log("scale: " + percentStage);
+        this._timeBarScript.drawMask(this._scalePercentage);
     }
 
 }
