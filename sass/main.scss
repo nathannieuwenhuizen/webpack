@@ -17,6 +17,10 @@ body, html {
     background: aliceblue;
     max-height: 100vh;
     overflow: scroll;
+    p{
+        padding: 0;
+        margin: 0;
+    }
 }
 #editor{
     display: none;

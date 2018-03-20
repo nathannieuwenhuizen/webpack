@@ -4,7 +4,7 @@ import Atlases from '../Data/Atlases';
 export default class EditorEmitter extends Phaser.Particles.Arcade.Emitter
 {
 
-    private code: string;
+    public code: string;
     public editorValues: {
         gravity: number,
         alphamin: number,
@@ -38,15 +38,16 @@ export default class EditorEmitter extends Phaser.Particles.Arcade.Emitter
 
     public setUpEmitter(): void
     {
+        console.log();
         this.code =
         'public createEmitter(): Phaser.Particles.Arcade.Emitter{' +
         'let emitter: Phaser.Particles.Arcade.Emitter = new Phaser.Particles.Arcade.Emitter(this.game, 0, 0, ' + this.editorValues.maxParticles + ');' +
-        'emitter.makeParticles(Atlases.Interface, "' + this.editorValues.spriteName + '");' +
+        'emitter.makeParticles(Atlases.Interface, "' + this.editorValues.spriteName.split(', ') + '");' +
         'emitter.setXSpeed(' + this.editorValues.minXSpeed + ', ' + this.editorValues.maxXSpeed + ');' +
         'emitter.setYSpeed(' + this.editorValues.minYSpeed + ', ' + this.editorValues.maxYSpeed + ');';
 
         this.maxParticles = this.editorValues.maxParticles;
-        this.makeParticles(Atlases.Interface, this.editorValues.spriteName);
+        this.makeParticles(Atlases.Interface, this.editorValues.spriteName.split(', '));
 
         this.setXSpeed(this.editorValues.minXSpeed, this.editorValues.maxXSpeed);
         this.setYSpeed(this.editorValues.minYSpeed, this.editorValues.maxYSpeed);
@@ -83,7 +84,7 @@ export default class EditorEmitter extends Phaser.Particles.Arcade.Emitter
         this.startEmitter();
 
         this.code += 'return emitter;}';
-        console.log(this.code);
+        //console.log(this.code);
     }
     public startEmitter(): void {
         if (this.editorValues.explode) {

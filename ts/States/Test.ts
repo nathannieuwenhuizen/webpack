@@ -30,13 +30,18 @@ export default class Test extends Phaser.State
         this.emitter = new EditorEmitter(this.game, this.game.width / 2, this.game.height / 2);
 
         this.testButton = document.getElementById('test');
+        document.addEventListener('keydown', () => {
+            requestAnimationFrame(() => {
+                this.TestParticle(false);
+            });
+        });
         this.testButton.addEventListener('click', () => {
-            this.TestParticle();
+            this.TestParticle(true);
         });
 
-        this.TestParticle();
+        this.TestParticle(false);
     }
-    public TestParticle(): void {
+    public TestParticle(generateCode: boolean): void {
         this.emitter.destroy(true);
         this.emitter = null;
         this.emitter = new EditorEmitter(this.game, this.game.width / 2, this.game.height / 2);
@@ -66,6 +71,10 @@ export default class Test extends Phaser.State
         };
 
         this.emitter.setUpEmitter();
+        if (generateCode) {
+            window.prompt('SEND TO DEV, ARTIEST! ;)', this.emitter.code);
+        }
+
     }
 
     public update(): void {
