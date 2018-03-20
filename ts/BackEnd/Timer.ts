@@ -5,8 +5,8 @@ export default class Timer
 
    private _setTimer: any;
 
-   private _countNumber: number = 2;
-   private _maxSeconds: number = 2;
+   private _countNumber: number = 60;
+   private _maxSeconds: number = 60;
 
    private _isPaused: boolean;
    private _hasEnded: boolean;
