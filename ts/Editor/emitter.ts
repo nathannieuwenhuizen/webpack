@@ -40,11 +40,12 @@ export default class EditorEmitter extends Phaser.Particles.Arcade.Emitter
     {
         this.code =
         'public createEmitter(): Phaser.Particles.Arcade.Emitter{' +
-        'let emitter: Phaser.Particles.Arcade.Emitter = new Phaser.Particles.Arcade.Emitter(this.game, 0, 0);' +
+        'let emitter: Phaser.Particles.Arcade.Emitter = new Phaser.Particles.Arcade.Emitter(this.game, 0, 0, ' + this.editorValues.maxParticles + ');' +
         'emitter.makeParticles(Atlases.Interface, "' + this.editorValues.spriteName + '");' +
         'emitter.setXSpeed(' + this.editorValues.minXSpeed + ', ' + this.editorValues.maxXSpeed + ');' +
         'emitter.setYSpeed(' + this.editorValues.minYSpeed + ', ' + this.editorValues.maxYSpeed + ');';
 
+        this.maxParticles = this.editorValues.maxParticles;
         this.makeParticles(Atlases.Interface, this.editorValues.spriteName);
 
         this.setXSpeed(this.editorValues.minXSpeed, this.editorValues.maxXSpeed);
