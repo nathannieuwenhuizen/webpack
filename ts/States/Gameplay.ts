@@ -1,14 +1,16 @@
 import 'phaser-ce';
-
+ 
 import Images from '../Data/Images';
-
+ 
 import GameField from '../Objects/GameObjects/GameField';
 import GameTile from '../Objects/GridObjects/GameTile';
-
+ 
 import PauseMenu from '../UI/PauseMenu';
 import GameOverScreen from '../UI/GameOverScreen';
 import Timer from '../BackEnd/Timer';
 import TimeBar from '../UI/TimeBar';
+import TimeBarScaler from '../BackEnd/TimeBarScaler';
+
 import Atlases from '../Data/Atlases';
 import ImageButton from '../UI/ImageButton';
 import Character from '../Objects/Character';
@@ -21,6 +23,7 @@ export default class Gameplay extends Phaser.State
 
     private _timeBar: TimeBar;
     private _timerClass: Timer;
+    private _timeScalerClass: TimeBarScaler;
 
     private _gameField: GameField;
 
@@ -53,10 +56,6 @@ export default class Gameplay extends Phaser.State
     {
         super.create(this.game);
 
-        this._timerClass = new Timer();
-        this._timeBar = new TimeBar(this.game);
-        console.log(this._timerClass, this._timeBar);
-
         this._backgroundSprite = new Phaser.Sprite(this.game, 0, 0, Atlases.Interface, 'background');
         this.game.add.existing(this._backgroundSprite);
 
@@ -70,7 +69,12 @@ export default class Gameplay extends Phaser.State
         this._highscoreBackdropSprite.anchor.set(0.5, 0);
         this.game.add.existing(this._highscoreBackdropSprite);
 
+        this._timerClass = new Timer();
+        this._timeBar = new TimeBar(this.game);
+        this._timeScalerClass = new TimeBarScaler(this.game);
+
         this._pauseMenu = new PauseMenu(this.game, 0.6, 120, 125, Images.PopUpMenuBackground);
+
         this._pauseMenu.onContinue.add(this.disableMenu, this);
         this.pauseMenuButton = new ImageButton(this.game, 0, 0, '', this.activateMenu, this );
         this.game.add.existing(this.pauseMenuButton);
@@ -84,6 +88,7 @@ export default class Gameplay extends Phaser.State
         this.game.add.existing(this._scoreText);
 
         this.resize();
+
     }
 
     public newPathCreated(path: GameTile[]): void

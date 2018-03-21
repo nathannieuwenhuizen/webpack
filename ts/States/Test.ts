@@ -1,8 +1,7 @@
 import 'phaser-ce';
 
-import Images from '../Data/Images';
 import IGame from '../PluginManagers/IGame';
-
+import EditorEmitter from '../Editor/emitter';
 export default class Test extends Phaser.State
 {
     public static Name: string = 'test';
@@ -10,7 +9,9 @@ export default class Test extends Phaser.State
     public name: string = Test.Name;
     public game: IGame;
 
-    private _testSprite: Phaser.Sprite;
+    public emitter: EditorEmitter;
+    public testButton: any;
+    private followMouse: boolean = false;
 
     constructor()
     {
@@ -19,34 +20,77 @@ export default class Test extends Phaser.State
 
     public init(): void
     {
-        //
+        document.getElementById('editor').style.display = 'block';
     }
 
     public create(): void
     {
         super.create(this.game);
 
-        this._testSprite = this.game.add.sprite(this.game.width / 2, this.game.height / 2, Images.IconTest);
-        this._testSprite.anchor.set(.5);
+        this.emitter = new EditorEmitter(this.game, this.game.width / 2, this.game.height / 2);
 
-        let chip: any = this.game.add.spine(
-            200,        //X positon
-            200,        //Y position
-            'chips'     //the key of the object in cache
-        );
-        chip.setAnimationByName(
-            0,          //Track index
-            'idle',     //Animation's name
-            true        //If the animation should loop or not
-        );
-        chip.setSkinByName('chip_blue');
+        this.testButton = document.getElementById('test');
+        document.addEventListener('keydown', () => {
+            requestAnimationFrame(() => {
+                this.TestParticle(false);
+            });
+        });
+        this.testButton.addEventListener('click', () => {
+            this.TestParticle(true);
+        });
+
+        this.TestParticle(false);
+    }
+    public TestParticle(generateCode: boolean): void {
+        this.emitter.destroy(true);
+        this.emitter = null;
+        this.emitter = new EditorEmitter(this.game, this.game.width / 2, this.game.height / 2);
+        this.followMouse = (<any>document.getElementById('mouse')).checked;
+
+        this.emitter.editorValues = {
+        gravity: Math.round((<any>document.getElementById('gravity')).value),
+        alphamin: Math.round((<any>document.getElementById('alphamin')).value),
+        alphamax: Math.round((<any>document.getElementById('alphamax')).value),
+        alpharate: (<any>document.getElementById('alpharate')).value,
+        scalemin: Math.round((<any>document.getElementById('scalemin')).value),
+        scaleMax: Math.round((<any>document.getElementById('scalemax')).value),
+        scaleRate: (<any>document.getElementById('scaleRate')).value,
+        minrotation: (<any>document.getElementById('minrotation')).value,
+        maxrotation: (<any>document.getElementById('maxrotation')).value,
+        minXSpeed: Math.round((<any>document.getElementById('xMinSpeed')).value),
+        minYSpeed: Math.round((<any>document.getElementById('yMinSpeed')).value),
+        maxXSpeed: Math.round((<any>document.getElementById('xMaxSpeed')).value),
+        maxYSpeed: Math.round((<any>document.getElementById('yMaxSpeed')).value),
+        explode: (<any>document.getElementById('explode')).checked,
+        lifespan: (<any>document.getElementById('lifespan')).value,
+        freq: Math.round((<any>document.getElementById('freq')).value),
+        width: Math.round((<any>document.getElementById('width')).value),
+        height: Math.round((<any>document.getElementById('height')).value),
+        spriteName: (<any>document.getElementById('name')).value,
+        maxParticles: (<any>document.getElementById('maxparticles')).value,
+        spriteSheet: (<any>document.getElementById('spritesheet')).checked,
+        spriteSheetFPS: Math.round((<any>document.getElementById('fps')).value),
+        spriteSheetLoop: (<any>document.getElementById('loop')).checked
+        };
+
+        this.emitter.setUpEmitter();
+        if (generateCode) {
+            window.prompt('SEND TO DEV, ARTIEST! ;)', this.emitter.code);
+        }
+
     }
 
+    public update(): void {
+        if (this.followMouse) {
+            this.emitter.emitX = this.game.input.activePointer.x;
+            this.emitter.emitY = this.game.input.activePointer.y;
+        }
+    }
     public shutdown(): void
     {
         super.shutdown(this.game);
 
-        this._testSprite.destroy(true);
-        this._testSprite = null;
+        //this._testSprite.destroy(true);
+        //this._testSprite = null;
     }
 }

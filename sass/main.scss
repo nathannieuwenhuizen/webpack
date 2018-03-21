@@ -7,13 +7,32 @@ body, html {
     padding: 0px;
     background-color: #36454F;
     overflow: hidden;
-
     
+}
+.editor{
+    padding: 5px;
+    position: absolute;
+    top: 0;   
+    border: 5px solid black;
+    background: aliceblue;
+    max-height: 100vh;
+    overflow-y: scroll;
+    p{
+        padding: 0;
+        margin: 0;
+    }
+    b {
+        margin-top: 10px;
+        color: purple;
+    }
+}
+#editor{
+    display: none;
 }
 
 @media screen and (orientation:landscape) 
-        {
-            .rotateWarning
+    {
+    .rotateWarning
     {
             width: 100%;
             height: 100%;
@@ -24,5 +43,5 @@ body, html {
             background-repeat: no-repeat; 
             background-position: center;
         }
-        }
+    }
 @import 'component';
