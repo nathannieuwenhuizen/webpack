@@ -1,10 +1,10 @@
 import 'phaser-ce';
- 
+
 import Images from '../Data/Images';
- 
+
 import GameField from '../Objects/GameObjects/GameField';
 import GameTile from '../Objects/GridObjects/GameTile';
- 
+
 import PauseMenu from '../UI/PauseMenu';
 import GameOverScreen from '../UI/GameOverScreen';
 import Timer from '../BackEnd/Timer';
@@ -86,6 +86,8 @@ export default class Gameplay extends Phaser.State
 
         this._scoreText = new Phaser.Text(this.game, this.game.width / 2, 0, 'Score: 0', Constants.buttonTextStyle);
         this.game.add.existing(this._scoreText);
+
+        this._timerClass.onTimeEnd.add(this.gameOverScreen, this);
 
         this.resize();
 

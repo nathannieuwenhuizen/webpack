@@ -33,6 +33,7 @@ export default class Timer
     constructor()
     {
         this.startTimer();
+        this.onTimeEnd = new Phaser.Signal();
     }
 
     public startTimer():void
@@ -74,7 +75,7 @@ export default class Timer
     {
         clearInterval(this._setTimer);
 
-        this.onTimeEnd = new Phaser.Signal();
+        
         this.onTimeEnd.dispatch();
     }
 
