@@ -1,25 +1,24 @@
 import 'phaser-ce';
 
-import Images from '../Data/Images';
-import Menu from './Menu';
+import Preload from './Preload';
 
-export default class Boot extends Phaser.State 
+export default class Boot extends Phaser.State
 {
     public static Name: string = 'boot';
 
     public name: string = Boot.Name;
 
-    constructor() 
+    constructor()
     {
         super();
     }
 
-    public init(): void 
+    public init(): void
     {
         if (this.game.device.desktop) {
             this.scale.pageAlignHorizontally = true;
             this.scale.windowConstraints.bottom = 'visual';
-            
+
             this.game.onBlur.add(() => {
                 this.game.sound.mute = true;
             });
@@ -96,30 +95,28 @@ export default class Boot extends Phaser.State
         let CALCULATED_HEIGHT: any = Math.ceil(height * scaleFactor);
 
         manager.setGameSize(CALCULATED_WIDTH, CALCULATED_HEIGHT);
-        manager.setUserScale(1 / scaleFactor, 1 / scaleFactor); 
+        manager.setUserScale(1 / scaleFactor, 1 / scaleFactor);
     }
 
     public preload(): void
     {
         super.preload(this.game);
-        // This will be replaced with a propper preloader
-        this.game.load.image(Images.IconTest, './assets/sprites/' + Images.IconTest + '.png');
-
-        this.game.load.spine('chips', 'assets/spine/chips.json');
     }
 
     public resize(): void
     {
+        //
     }
 
     public create(): void
     {
-        super.create(this.game); 
-        this.state.start(Menu.Name);
+        super.create(this.game);
+        this.state.start(Preload.Name);
     }
 
-    public shutdown(): void 
+    public shutdown(): void
     {
+        //
     }
 
 }

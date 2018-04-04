@@ -1,10 +1,9 @@
 import 'phaser-ce';
 
-import GamePlay from './Gameplay';
 import Test from './Test';
 import TextButton from '../UI/TextButton';
 import Gameplay from './Gameplay';
-export default class Menu extends Phaser.State 
+export default class Menu extends Phaser.State
 {
     public static Name: string = 'menu';
 
@@ -12,14 +11,14 @@ export default class Menu extends Phaser.State
 
     private playButton: TextButton;
     private testButton: TextButton;
-    private nn: number = 5;
-    constructor() 
+    constructor()
     {
         super();
     }
 
-    public init(): void 
+    public init(): void
     {
+        //
     }
 
     public create(): void
@@ -46,7 +45,7 @@ export default class Menu extends Phaser.State
         this.testButton.x = this.game.width / 2;
     }
 
-    public shutdown(): void 
+    public shutdown(): void
     {
         super.shutdown(this.game);
         this.testButton.destroy(true);
