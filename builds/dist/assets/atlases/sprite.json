@@ -1,0 +1,30 @@
+{
+    "frames": {
+        "icon": {
+            "frame": {
+                "x": 398,
+                "y": 0,
+                "w": 159,
+                "h": 149
+            }
+        },
+        "Naamloos": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 393,
+                "h": 605
+            }
+        }
+    },
+    "meta": {
+        "app": "spritesheet-templates",
+        "version": "10.2.2",
+        "image": "~sprite.png",
+        "scale": 1,
+        "size": {
+            "w": 557,
+            "h": 605
+        }
+    }
+}
