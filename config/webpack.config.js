@@ -109,7 +109,11 @@ module.exports = {
             {
                 from: path.join(basePath, 'template/index.html'),
                 to: path.join(basePath, 'builds/dev/index.html')
-            }
+            },
+            // {
+            //     from: path.join(basePath, 'template/projectinfo.html'),
+            //     to: path.join(basePath, 'builds/dev/projectinfo.html')
+            // }
         ]),
         new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),
         new ForkTsCheckerWebpackPlugin({
