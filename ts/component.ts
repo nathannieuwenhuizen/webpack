@@ -1,12 +1,10 @@
-export default class component {
-    constructor(){
-    }
-    
+export default class Component {
+
     public CreatingSomeClass(): any {
-        var element: any = document.createElement('div');
+        let element: any = document.createElement('div');
         element.innerHTML = 'component class';
         element.classList.add('hello');
         // Add the image to our existing div.
         return element;
-    } 
+    }
 }

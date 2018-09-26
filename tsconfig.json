@@ -1,11 +1,17 @@
 {
     "compilerOptions": {
-        "outDir": "../dev/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "module": "commonjs",
+        "module": "amd",
         "target": "es5",
-        "jsx": "react",
-        "allowJs": true
-    }
+        "moduleResolution": "node",
+        "sourceMap": false,
+        "declaration": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitAny":true,
+        "isolatedModules": true
+    },
+    "files": [
+        "./ts/definitions.d.ts",
+        "./ts/app.ts"
+    ]
 }

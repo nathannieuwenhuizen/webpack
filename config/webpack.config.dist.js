@@ -9,7 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SpritesmithPlugin = require('webpack-spritesmith');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const pathsToClean = ['dev'];
+const pathsToClean = ['dist'];
 const cleanOptions = { root: path.join(__dirname, '../builds'), verbose: true, dry: false, exclude: [],};
 const HappyPack = require('happypack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -63,12 +63,21 @@ module.exports = {
     },
     output: {
         filename: 'game.js',
-        path: path.join(basePath, 'builds/dev/'),
+        path: path.join(basePath, 'builds/dist/'),
         publicPath: "../assets/"
     },
     watch: true,
 
     plugins: [
+        new webpack.DefinePlugin({
+            'GAME_WIDTH': 720,
+            'GAME_HEIGHT': 1280,
+            'DEBUG': true,
+            'version': JSON.stringify('dist'),
+            'libs': JSON.stringify([
+                'node_modules/@orange-games/phaser-spine/build/phaser-spine.js'
+            ])
+        }),
         new ExtractTextPlugin({
             filename: 'assets/style.css'
         }),
@@ -84,7 +93,7 @@ module.exports = {
                 './atlas_assets/**/*.png'
             ],
             server: {
-                baseDir: ['./builds/dev']
+                baseDir: ['./builds/dist']
             }
         }, {
             reload: true
@@ -104,11 +113,11 @@ module.exports = {
         new CopyWebpackPlugin([
             {
                 from: path.join(basePath, 'assets'),
-                to: path.join(basePath, 'builds/dev/assets')
+                to: path.join(basePath, 'builds/dist/assets')
             },
             {
                 from: path.join(basePath, 'template/index.html'),
-                to: path.join(basePath, 'builds/dev/index.html')
+                to: path.join(basePath, 'builds/dist/index.html')
             }
         ]),
         new ForkTsCheckerNotifierWebpackPlugin({alwaysNotify: true}),
@@ -123,11 +132,11 @@ module.exports = {
                 glob: '**/*.png'
             },
             target: {
-                image: path.resolve(__dirname, '../builds/dev/assets/atlases/sprite.png'),
+                image: path.resolve(__dirname, '../builds/dist/assets/atlases/sprite.png'),
                 css: [
                     //optional if we want a css file referencing the atlas
-                    //path.resolve(__dirname, '../builds/dev/assets/atlases/sprite.css'),
-                    [path.resolve(__dirname, '../builds/dev/assets/atlases/sprite.json'), {
+                    //path.resolve(__dirname, '../builds/dist/assets/atlases/sprite.css'),
+                    [path.resolve(__dirname, '../builds/dist/assets/atlases/sprite.json'), {
                         format: 'json_texture'
                     }]
                 ]
@@ -138,7 +147,20 @@ module.exports = {
             spritesmithOptions: {
                 padding: 5
             },
-        })
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                sequences: true,
+                dead_code: true,
+                conditionals: true,
+                booleans: true,
+                unused: true,
+                if_return: true,
+                join_vars: true,
+                drop_console: true,
+            },
+            mangle: true,
+        }),
   ]
 
 };
